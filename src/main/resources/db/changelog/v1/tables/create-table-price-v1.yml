@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202406301622
+      author: AlexandrSh
+      changes:
+        - createTable:
+            tableName: price
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+#              - column:
+#                  name: item_id
+#                  type: varchar(10)
+              - column:
+                  name: price_new
+                  type: integer
+              - column:
+                  name: price_old
+                  type: integer

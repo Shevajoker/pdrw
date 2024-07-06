@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: pdrw
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pdrw-db
+    username: pdrw
+    password: pdrwadmin
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show_sql: true
+  liquibase:
+    enabled: true
+    drop-first: false
+    change-log: db/changelog/db.changelog-master.yml
+    default-schema: public
+server:
+  port: 8080

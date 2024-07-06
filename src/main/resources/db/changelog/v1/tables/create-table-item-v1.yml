@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202406282201
+      author: AlexandrSh
+      changes:
+        - createTable:
+            tableName: item
+            columns:
+              - column:
+                  name: id
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: image
+                  type: varchar(255)
+              - column:
+                  name: price_new
+                  type: integer
+              - column:
+                  name: price_old
+                  type: integer
+              - column:
+                  name: discount
+                  type: integer

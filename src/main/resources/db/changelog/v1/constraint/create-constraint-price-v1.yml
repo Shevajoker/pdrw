@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202406301722
+      author: AlexandrSh
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: item_id
+            baseTableCatalogName: price
+            baseTableName: price
+            baseTableSchemaName: public
+            constraintName: item_id_fk
+            deferrable: true
+            initiallyDeferred: true
+            referencedColumnNames: id
+            referencedTableName: item
+            referencedTableSchemaName: public
+            validate: true
