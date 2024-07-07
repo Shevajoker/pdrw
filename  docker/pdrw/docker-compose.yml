@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16.0
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "pdrw-db"
+      POSTGRES_USER: "pdrw"
+      POSTGRES_PASSWORD: "pdrwadmin"
+    ports:
+      - "5432:5432"
+  app:
+    image: shevajoker/pdrw:0.0.0.1
+    build:
+      context: .
+    container_name: app
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/pdrw-db"
+      POSTGRES_USER: "pdrw"
+      POSTGRES_PASSWORD: "pdrwadmin"
+    ports:
+      - "8069:8069"
+    depends_on:
+      - postgres
