@@ -1,3 +1,5 @@
+server:
+  port: 8069
 spring:
   application:
     name: pdrw
@@ -6,14 +8,18 @@ spring:
     username: pdrw
     password: pdrwadmin
   jpa:
+#    hibernate:
+#      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
     show_sql: true
   liquibase:
     enabled: true
     drop-first: false
     change-log: db/changelog/db.changelog-master.yml
     default-schema: public
-server:
-  port: 8080
+token:
+  signing:
+    key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855

@@ -5,6 +5,7 @@ databaseChangeLog:
       changes:
         - createTable:
             tableName: price
+            schemaName: public
             columns:
               - column:
                   name: id
