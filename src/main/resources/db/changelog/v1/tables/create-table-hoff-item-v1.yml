@@ -4,15 +4,21 @@ databaseChangeLog:
       author: AlexandrSh
       changes:
         - createTable:
-            tableName: item
+            tableName: hoff-item
             schemaName: public
             columns:
               - column:
                   name: id
-                  type: varchar(10)
+                  type: UUID
                   constraints:
                     nullable: false
                     primaryKey: true
+              - column:
+                  name: article
+                  type: varchar(20)
+              - column:
+                  name: date-update
+                  type: timestamp
               - column:
                   name: name
                   type: varchar(255)
