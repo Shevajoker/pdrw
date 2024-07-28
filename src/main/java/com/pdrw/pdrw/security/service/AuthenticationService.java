@@ -22,7 +22,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signUp(SignUpRequest request) {
+    public JwtAuthenticationResponse signUp(SignUpRequest request, String lang) {
 
         var user = User.builder()
                 .username(request.getUsername())
@@ -33,7 +33,7 @@ public class AuthenticationService {
 
         userService.create(user);
 
-        var jwt = jwtService.generateToken(user);
+        var jwt = jwtService.generateToken(user, lang);
         return new JwtAuthenticationResponse(jwt);
     }
 
@@ -43,7 +43,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signIn(SignInRequest request) {
+    public JwtAuthenticationResponse signIn(SignInRequest request, String lang) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getUsername(),
                 request.getPassword()
@@ -53,7 +53,7 @@ public class AuthenticationService {
                 .userDetailsService()
                 .loadUserByUsername(request.getUsername());
 
-        var jwt = jwtService.generateToken(user);
+        var jwt = jwtService.generateToken(user, lang);
         return new JwtAuthenticationResponse(jwt);
     }
 }
