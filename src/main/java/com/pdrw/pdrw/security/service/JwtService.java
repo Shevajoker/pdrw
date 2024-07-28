@@ -37,12 +37,13 @@ public class JwtService {
      * @param userDetails данные пользователя
      * @return токен
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, String lang) {
         Map<String, Object> claims = new HashMap<>();
         if (userDetails instanceof User customUserDetails) {
             claims.put("id", customUserDetails.getId());
             claims.put("email", customUserDetails.getEmail());
             claims.put("role", customUserDetails.getRole());
+            claims.put("lang", lang);
         }
         return generateToken(claims, userDetails);
     }
