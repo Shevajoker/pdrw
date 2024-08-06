@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-column-language
+      author: Shevchilk
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: lang
+                  type: varchar(20)
