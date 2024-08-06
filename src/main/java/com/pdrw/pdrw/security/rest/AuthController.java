@@ -21,14 +21,13 @@ public class AuthController {
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request,
-                                            @RequestParam() String lang) {
+                                            @RequestParam(required = false, defaultValue = "ru") String lang) {
         return authenticationService.signUp(request, lang);
     }
 
     @Operation(summary = "Авторизация пользователя")
     @PostMapping("/sign-in")
-    public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request,
-                                            @RequestParam() String lang) {
-        return authenticationService.signIn(request, lang);
+    public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
+        return authenticationService.signIn(request);
     }
 }
