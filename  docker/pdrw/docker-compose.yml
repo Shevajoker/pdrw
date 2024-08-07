@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
   app:
-    image: shevajoker/pdrw:0.0.0.3
+    image: shevajoker/pdrw:0.0.0.4
     build:
       context: .
     container_name: app
