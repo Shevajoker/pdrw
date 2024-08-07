@@ -41,12 +41,12 @@ public class UserService {
     }
 
     /**
-     * Получение пользователя по имени пользователя
+     * Получение пользователя по email
      *
      * @return пользователь
      */
-    public User getByUsername(String username) {
-        return repository.findByUsername(username)
+    public User getByEmail(String email) {
+        return repository.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
 
     }
@@ -59,7 +59,7 @@ public class UserService {
      * @return пользователь
      */
     public UserDetailsService userDetailsService() {
-        return this::getByUsername;
+        return this::getByEmail;
     }
 
     /**
@@ -70,7 +70,7 @@ public class UserService {
     public User getCurrentUser() {
         // Получение имени пользователя из контекста Spring Security
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByUsername(username);
+        return getByEmail(username);
     }
 
 

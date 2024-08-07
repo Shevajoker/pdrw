@@ -31,6 +31,11 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractEmail(String token) {
+        Claims claims = extractAllClaims(token);
+        return (String) claims.get("email");
+    }
+
     /**
      * Генерация токена
      *
@@ -56,8 +61,8 @@ public class JwtService {
      * @return true, если токен валиден
      */
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        final String email = extractUserName(token);
+        return (email.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     /**
