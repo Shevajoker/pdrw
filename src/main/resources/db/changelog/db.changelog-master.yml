@@ -5,6 +5,8 @@ databaseChangeLog:
       file: db\changelog\v1\tables\user\create-table-user-v1.yml
   - include:
       file: db\changelog\v1\tables\user\column-language.yml
+  - include:
+      file: db\changelog\v1\tables\pinskdrev\create-pinskdrev-item-v1.yml
 #  - include:
 #      file: db\changelog\v1\tables\create-table-price-v1.yml
 #  - include:

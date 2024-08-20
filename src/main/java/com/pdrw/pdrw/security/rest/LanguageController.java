@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/lang")
 @RequiredArgsConstructor
-@Tag(name = "Язык")
+@Tag(name = "Language")
 public class LanguageController {
 
     private final UserService userService;
 
-    @Operation(summary = "Язык")
+    @Operation(summary = "Language")
     @GetMapping()
     public String getLang() {
         return userService.getLang();
     }
 
-    @Operation(summary = "Обновить язык")
+    @Operation(summary = "Update language")
     @JsonProperty("lang")
     @PutMapping()
     public String setLang(@RequestParam @Valid String lang) {

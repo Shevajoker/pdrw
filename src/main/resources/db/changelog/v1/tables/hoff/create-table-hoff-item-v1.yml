@@ -4,7 +4,7 @@ databaseChangeLog:
       author: AlexandrSh
       changes:
         - createTable:
-            tableName: hoff-item
+            tableName: hoff_item
             schemaName: public
             columns:
               - column:

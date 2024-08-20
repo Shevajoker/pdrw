@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "hoff-item")
+@Table(name = "hoff_item")
 public class HoffItem implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
