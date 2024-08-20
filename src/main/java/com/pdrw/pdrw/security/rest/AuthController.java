@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Tag(name = "Аутентификация")
+@Tag(name = "Authentication")
 public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-    @Operation(summary = "Регистрация пользователя")
+    @Operation(summary = "Sing up")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequest request,
                                             @RequestParam(required = false, defaultValue = "ru") String lang) {
         return authenticationService.signUp(request, lang);
     }
 
-    @Operation(summary = "Авторизация пользователя")
+    @Operation(summary = "Sing in")
     @PostMapping("/sign-in")
     public JwtAuthenticationResponse signIn(@RequestBody @Valid SignInRequest request) {
         return authenticationService.signIn(request);

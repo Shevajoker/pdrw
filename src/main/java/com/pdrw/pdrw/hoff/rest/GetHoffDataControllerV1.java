@@ -21,14 +21,14 @@ public class GetHoffDataControllerV1 {
     private final GetHoffDataService getHoffDataService;
     private final HoffItemService hoffItemService;
 
-    @Operation(summary = "Загрузить данные")
+    @Operation(summary = "Set data")
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/set-data")
     public int setData(@RequestBody() String data) throws IOException {
         return getHoffDataService.setData(data);
     }
 
-    @Operation(summary = "Найти по артикулу")
+    @Operation(summary = "Find by article")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/list/{article}")
     public List<HoffItem> findByArticle(@PathVariable String article) throws IOException {

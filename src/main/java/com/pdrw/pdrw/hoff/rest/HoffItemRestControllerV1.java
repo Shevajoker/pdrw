@@ -22,13 +22,13 @@ public class HoffItemRestControllerV1 {
 
     private final HoffItemService hoffItemService;
 
-    @Operation(summary = "Найти по ID")
+    @Operation(summary = "Find by ID")
     @GetMapping("/{id}")
     public HoffItem findById(@PathVariable UUID id) {
         return hoffItemService.findById(id);
     }
 
-    @Operation(summary = "Найти все позиции")
+    @Operation(summary = "Find all")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/all")
     public List<HoffItem> findAll() {
