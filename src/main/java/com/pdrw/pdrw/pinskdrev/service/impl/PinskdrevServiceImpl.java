@@ -1,6 +1,7 @@
 package com.pdrw.pdrw.pinskdrev.service.impl;
 
 import com.pdrw.pdrw.pinskdrev.model.Pinskdrev;
+import com.pdrw.pdrw.pinskdrev.model.wrappers.PinskdrevAverageCategoryData;
 import com.pdrw.pdrw.pinskdrev.model.wrappers.PinskdrevData;
 import com.pdrw.pdrw.pinskdrev.repository.PinskdrevRepository;
 import com.pdrw.pdrw.pinskdrev.service.PinskdrevService;
@@ -8,10 +9,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 public class PinskdrevServiceImpl implements PinskdrevService {
@@ -69,6 +69,51 @@ public class PinskdrevServiceImpl implements PinskdrevService {
         pinskdrevData.setArticleChangeData(getAtricleCahngeData());
 
         return pinskdrevData;
+    }
+
+    @Override
+    public List<PinskdrevAverageCategoryData> getPinskdrevAverageCategoryData() {
+        List<PinskdrevAverageCategoryData> result = new ArrayList<>();
+        Map<String, BigDecimal> averageByType = getAverageByType();
+        Set<String> types = averageByType.keySet();
+        for (String type : types) {
+            PinskdrevAverageCategoryData data = new PinskdrevAverageCategoryData()
+                    .setNameCategory(type)
+                    .setAveragePrice(averageByType.get(type));
+
+            Optional<Pinskdrev> pinskdrevMinOptional = pinskdrevRepository.findByTypeAndMinPrice(type);
+            pinskdrevMinOptional.ifPresent(data::setMinPrice);
+            Optional<Pinskdrev> pinskdrevMaxOptional = pinskdrevRepository.findByTypeAndMaxPrice(type);
+            pinskdrevMaxOptional.ifPresent(data::setMaxPrice);
+            result.add(data);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Pinskdrev> getNewCreatedItems(Integer limit) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        localDateTime = localDateTime.withHour(0).withMinute(0);
+        Date fromDay = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        Date toDay = new Date();
+        return pinskdrevRepository.findNewCreatedItems(fromDay, toDay, limit);
+    }
+
+    @Override
+    public List<Pinskdrev> getNotUpdatedItems(Integer limit) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        localDateTime = localDateTime.withHour(0).withMinute(0);
+        Date fromDay = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        return pinskdrevRepository.findNotUpdatedItems(fromDay, limit);
+    }
+
+    @Override
+    public List<Pinskdrev> getChangedItems(Integer limit) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        localDateTime = localDateTime.withHour(0).withMinute(0);
+        Date fromDay = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        Date toDay = new Date();
+        return pinskdrevRepository.getChangedItems(fromDay, toDay, limit);
     }
 
     private Map<String, List<Pinskdrev>> getAtricleCahngeData() {

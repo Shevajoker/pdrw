@@ -52,6 +52,7 @@ public class PinskdrevDataServiceImpl implements PinskdrevDataService {
                     pinskdrevToSave.setPriceOld(item.get("old_price") != null ? BigDecimal.valueOf(item.get("old_price").asInt()) : BigDecimal.ZERO);
                     pinskdrevToSave.setPriceNew(item.get("price") != null ? BigDecimal.valueOf(item.get("price").asInt()) : BigDecimal.ZERO);
                     pinskdrevToSave.setDiscount(calculateDiscount(item));
+                    pinskdrevToSave.setCreateDate(new Date());
                     pinskdrevToSave.setDateUpdate(new Date());
                     getCharacteristics(pinskdrevToSave, item);
             List<Pinskdrev> pinskdrevList = pinskdrevRepository.findByArticleOrderByDateUpdateDesc(pinskdrevToSave.getArticle());
@@ -63,6 +64,9 @@ public class PinskdrevDataServiceImpl implements PinskdrevDataService {
                     pinskdrevRepository.markActualFalse(pinskdrevToSave.getArticle());
                     pinskdrevRepository.save(pinskdrevToSave);
                     count++;
+                } else {
+                    pinskdrev.setDateUpdate(new Date());
+                    pinskdrevRepository.save(pinskdrev);
                 }
             } else {
                 pinskdrevToSave.setActual(Boolean.TRUE);

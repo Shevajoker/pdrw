@@ -1,6 +1,7 @@
 package com.pdrw.pdrw.pinskdrev.service;
 
 import com.pdrw.pdrw.pinskdrev.model.Pinskdrev;
+import com.pdrw.pdrw.pinskdrev.model.wrappers.PinskdrevAverageCategoryData;
 import com.pdrw.pdrw.pinskdrev.model.wrappers.PinskdrevData;
 
 import java.util.List;
@@ -20,4 +21,12 @@ public interface PinskdrevService {
     List<Pinskdrev> findAllByType(String type);
 
     PinskdrevData getData();
+
+    List<PinskdrevAverageCategoryData> getPinskdrevAverageCategoryData();
+
+    List<Pinskdrev> getNewCreatedItems(Integer limit);
+
+    List<Pinskdrev> getNotUpdatedItems(Integer limit);
+
+    List<Pinskdrev> getChangedItems(Integer limit);
 }

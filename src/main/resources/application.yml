@@ -4,7 +4,7 @@ spring:
   application:
     name: pdrw
   datasource:
-    url: jdbc:postgresql://localhost:5432/pdrw-db
+    url: jdbc:postgresql://localhost:5432/pdrw_db
     username: pdrw
     password: pdrwadmin
   jpa:
