@@ -14,7 +14,7 @@ services:
     image: postgres:16.0
     container_name: postgres
     environment:
-      POSTGRES_DB: "pdrw-db"
+      POSTGRES_DB: "pdrw_db"
       POSTGRES_USER: "pdrw"
       POSTGRES_PASSWORD: "pdrwadmin"
     ports:
@@ -25,7 +25,7 @@ services:
       context: .
     container_name: app
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/pdrw-db"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/pdrw_db"
       POSTGRES_USER: "pdrw"
       POSTGRES_PASSWORD: "pdrwadmin"
     ports:

@@ -32,7 +32,10 @@ databaseChangeLog:
                   name: discount
                   type: decimal
               - column:
-                  name: date-update
+                  name: date_create
+                  type: timestamp
+              - column:
+                  name: date_update
                   type: timestamp
               - column:
                   name: type

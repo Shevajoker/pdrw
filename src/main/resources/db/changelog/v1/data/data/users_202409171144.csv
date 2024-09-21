@@ -1,0 +1,8 @@
+"id","email","password","role","username","lang"
+f08a40a9-1ef2-4115-b48e-3bddd9bc8ac8,test7777@gmail.com,$2a$10$tLNFst.8jN7i/60UUk1XCeKhs4Tqb0t/lreOLXjhKk/yAn4AMSpHO,ROLE_USER,test7777,en
+e1eae1ff-760f-4c65-a11f-b08c08c793af,chupa-chups@gmail.com,$2a$10$SDHsecFr1WB9/TTOoQI32e0kiZnNDQ4px0.4FRXL/0vqbSvmn0Fl6,ROLE_USER,chupa,en
+"346b665f-aa18-457d-bc1c-e5ff525fbecd",service1@gmail.com,$2a$10$QxIEqtDcafZNnSZxSgaX8evnY3/A9d5yYJCIgG9xA0kfwzQ7YGIM2,ROLE_USER,service1,en
+"5f1fac7c-7758-4edf-8767-fc5c2250cf94",service2@gmail.com,$2a$10$Sa1J9PXmYXTpSKExJqik6uPyfSV3xnJZMMYypcUxnsH4kYKf.HPWG,ROLE_USER,service2,en
+ad6a623b-0d73-4241-87d0-1cc5fe431fb7,service3@gmail.com,$2a$10$v.AzVncbbuxM5Pc2eW94qes9YhctN9EAf.kBqCo/VqUhrtHR6/6i6,ROLE_USER,service3,en
+"8d55ba65-2141-493b-a8cb-dddf2c4500b8",service4@gmail.com,$2a$10$jZ5PUDjM9vVoIC3JhZBI1.uBzAgIJV2S4/w4UnvSsKrRzwMF2.to2,ROLE_USER,service4,en
+"244de232-41dd-493e-b03c-748c7534a0de",service5@gmail.com,$2a$10$h2U1p9Y7XGjLwa0RU57TuemHYkrF5l0Acoad5QmmTuuBxbJjdTVc6,ROLE_USER,service5,en

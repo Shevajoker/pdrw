@@ -36,7 +36,9 @@ public class Pinskdrev {
     private BigDecimal priceOld;
     @Column(name = "discount")
     private BigDecimal discount;
-    @Column(name = "date-update")
+    @Column(name = "date_create")
+    private Date createDate;
+    @Column(name = "date_update")
     private Date dateUpdate;
     @Column(name = "type")
     private String type;
