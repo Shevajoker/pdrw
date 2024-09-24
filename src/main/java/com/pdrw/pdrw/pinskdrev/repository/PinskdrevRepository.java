@@ -64,7 +64,7 @@ public interface PinskdrevRepository extends JpaRepository<Pinskdrev, UUID> {
 
     @Query("""
              SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
-             FROM Pinskdrev p
+             FROM Pinskdrev as p
              WHERE p.actual = true
              AND p.createDate BETWEEN :fromDate and :toDate
              AND (select count(*) from Pinskdrev as p2 where p2.article = p.article) > 1
@@ -72,4 +72,13 @@ public interface PinskdrevRepository extends JpaRepository<Pinskdrev, UUID> {
              LIMIT :limit
             """)
     List<Pinskdrev> getChangedItems(Date fromDate, Date toDate, Integer limit);
+
+    @Query("""
+             SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             FROM Pinskdrev as p
+             WHERE p.article = :article
+             ORDER BY p.dateUpdate DESC
+             LIMIT 2
+            """)
+    List<Pinskdrev> getItemWithPrevious(String article);
 }

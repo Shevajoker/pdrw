@@ -5,6 +5,7 @@ import com.pdrw.pdrw.pinskdrev.model.wrappers.PinskdrevAverageCategoryData;
 import com.pdrw.pdrw.pinskdrev.model.wrappers.PinskdrevData;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface PinskdrevService {
@@ -28,5 +29,5 @@ public interface PinskdrevService {
 
     List<Pinskdrev> getNotUpdatedItems(Integer limit);
 
-    List<Pinskdrev> getChangedItems(Integer limit);
+    Map<String, List<Pinskdrev>> getChangedItems(Integer limit);
 }

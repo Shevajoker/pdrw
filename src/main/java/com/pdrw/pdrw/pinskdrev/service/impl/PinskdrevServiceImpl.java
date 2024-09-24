@@ -108,12 +108,17 @@ public class PinskdrevServiceImpl implements PinskdrevService {
     }
 
     @Override
-    public List<Pinskdrev> getChangedItems(Integer limit) {
+    public Map<String, List<Pinskdrev>> getChangedItems(Integer limit) {
         LocalDateTime localDateTime = LocalDateTime.now();
         localDateTime = localDateTime.withHour(0).withMinute(0);
         Date fromDay = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
         Date toDay = new Date();
-        return pinskdrevRepository.getChangedItems(fromDay, toDay, limit);
+        Map<String, List<Pinskdrev>> result = new HashMap<>();
+        List<Pinskdrev> pinskdrevList = pinskdrevRepository.getChangedItems(fromDay, toDay, limit);
+        for (Pinskdrev pinskdrev : pinskdrevList) {
+            result.put(pinskdrev.getArticle(), pinskdrevRepository.getItemWithPrevious(pinskdrev.getArticle()));
+        }
+         return result;
     }
 
     private Map<String, List<Pinskdrev>> getAtricleCahngeData() {

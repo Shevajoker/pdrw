@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/pinskdrev")
@@ -98,10 +99,10 @@ public class PinskdrevDataRestControllerV1 {
     @Operation(summary = "Get changed items")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/changed-items")
-    public ResponseEntity<List<Pinskdrev>> getChangedItems(
+    public ResponseEntity<Map<String, List<Pinskdrev>>> getChangedItems(
             @RequestParam(name = "limit", defaultValue = "20", required = false) Integer limit
     ) {
-        List<Pinskdrev> result = pinskdrevService.getChangedItems(limit);
+        Map<String, List<Pinskdrev>> result = pinskdrevService.getChangedItems(limit);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
