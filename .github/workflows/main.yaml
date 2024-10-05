@@ -51,4 +51,4 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:0.0.0.7
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:${{steps.extract_version.outputs.VERSION}}
