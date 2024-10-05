@@ -25,6 +25,10 @@ jobs:
         run: |
           mvn clean
           mvn -B package --file pom.xml
+
+      - name: Make mvnw executable
+        run: chmod +x mvnw
+
       - name: Extract project version
         id: extract_version
         run: |
