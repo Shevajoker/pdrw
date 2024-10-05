@@ -28,7 +28,8 @@ jobs:
       - name: Extract project version
         id: extract_version
         run: |
-          echo "VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
+          VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build Docker Image
         uses: docker/build-push-action@v2
@@ -36,7 +37,7 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: false
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:${{steps.extract_version.outputs.VERSION}}
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:${{env.VERSION}}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -50,4 +51,4 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:${{steps.extract_version.outputs.VERSION}}
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:${{env.VERSION}}
