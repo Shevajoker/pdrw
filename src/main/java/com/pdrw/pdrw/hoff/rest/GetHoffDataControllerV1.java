@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/hoff")
+@RequestMapping("/api/v1/hoff")
 @RequiredArgsConstructor
 @Tag(name = "HoffData")
 public class GetHoffDataControllerV1 {
