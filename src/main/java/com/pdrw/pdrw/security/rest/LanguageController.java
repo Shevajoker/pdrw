@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/lang")
+@RequestMapping("/api/v1/lang")
 @RequiredArgsConstructor
 @Tag(name = "Language")
 public class LanguageController {
