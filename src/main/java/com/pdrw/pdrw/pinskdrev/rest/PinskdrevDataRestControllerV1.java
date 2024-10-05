@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/pinskdrev")
+@RequestMapping("/api/v1/pinskdrev")
 @RequiredArgsConstructor
 @Tag(name = "Pinskdrev")
 public class PinskdrevDataRestControllerV1 {

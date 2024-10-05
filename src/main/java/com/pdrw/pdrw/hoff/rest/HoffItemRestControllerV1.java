@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/hoff/item")
+@RequestMapping("/api/v1/hoff/item")
 @RequiredArgsConstructor
 @Tag(name = "HoffData")
 public class HoffItemRestControllerV1 {
