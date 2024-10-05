@@ -28,7 +28,6 @@ jobs:
       - name: Extract project version
         id: extract_version
         run: |
-          cd book-network
           echo "VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
 
       - name: Build Docker Image
@@ -51,4 +50,4 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:0.0.0.7
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/pdrw:${{steps.extract_version.outputs.VERSION}}
