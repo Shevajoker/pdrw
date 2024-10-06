@@ -46,9 +46,9 @@ public class UserService {
      * @return пользователь
      */
     public User getByEmail(String email) {
-        return repository.findUserByEmail(email)
+        User result = repository.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
-
+return result;
     }
 
     /**
@@ -69,8 +69,8 @@ public class UserService {
      */
     public User getCurrentUser() {
         // Получение имени пользователя из контекста Spring Security
-        var username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByEmail(username);
+        User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return getByEmail(userDetails.getEmail());
     }
 
 

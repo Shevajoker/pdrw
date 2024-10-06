@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class LanguageController {
 
     @Operation(summary = "Language")
     @GetMapping()
+    @PreAuthorize("hasRole('USER')")
     public String getLang() {
         return userService.getLang();
     }
@@ -26,6 +28,7 @@ public class LanguageController {
     @Operation(summary = "Update language")
     @JsonProperty("lang")
     @PutMapping()
+    @PreAuthorize("hasRole('USER')")
     public String setLang(@RequestParam @Valid String lang) {
         User user = userService.getCurrentUser();
         user.setLang(lang);
