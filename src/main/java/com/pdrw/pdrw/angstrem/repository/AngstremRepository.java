@@ -29,16 +29,16 @@ public interface AngstremRepository extends JpaRepository<Angstrem, UUID> {
 
     Long countAngstremByActualTrue();
 
-    @Query("SELECT round (AVG(t.priceNew), 2) FROM Angstrem as t WHERE t.actual = true and t.type like :type")
+    @Query("SELECT round (AVG(t.priceNew), 2) FROM Angstrem as t WHERE t.actual = true and t.type like :type and t.priceNew != 0")
     BigDecimal getAveragePriceByType(String type);
 
     @Query("SELECT t.article FROM Angstrem as t group by t.article")
     List<String> findAllArticles();
 
-    @Query("SELECT new com.pdrw.pdrw.angstrem.model.Angstrem(t.id, t.article, t.name, t.image, t.priceNew, t.priceOld, t.discount, t.createDate, t.dateUpdate, t.type, t.length, t.width, t.height, t.weight, t.volume, t.actual, t.link) FROM Angstrem as t WHERE t.actual = true AND t.type like :type ORDER BY t.priceNew ASC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.angstrem.model.Angstrem(t.id, t.article, t.name, t.image, t.priceNew, t.priceOld, t.discount, t.createDate, t.dateUpdate, t.type, t.length, t.width, t.height, t.weight, t.volume, t.actual, t.link) FROM Angstrem as t WHERE t.actual = true AND t.type like :type and t.priceNew != 0 ORDER BY t.priceNew ASC LIMIT 1")
     Optional<Angstrem> findByTypeAndMinPrice(String type);
 
-    @Query("SELECT new com.pdrw.pdrw.angstrem.model.Angstrem(t.id, t.article, t.name, t.image, t.priceNew, t.priceOld, t.discount, t.createDate, t.dateUpdate, t.type, t.length, t.width, t.height, t.weight, t.volume, t.actual, t.link) FROM Angstrem as t WHERE t.actual = true AND t.type like :type ORDER BY t.priceNew DESC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.angstrem.model.Angstrem(t.id, t.article, t.name, t.image, t.priceNew, t.priceOld, t.discount, t.createDate, t.dateUpdate, t.type, t.length, t.width, t.height, t.weight, t.volume, t.actual, t.link) FROM Angstrem as t WHERE t.actual = true AND t.type like :type and t.priceNew != 0 ORDER BY t.priceNew DESC LIMIT 1")
     Optional<Angstrem> findByTypeAndMaxPrice(String type);
 
     @Query("""

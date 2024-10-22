@@ -8,6 +8,8 @@ databaseChangeLog:
   - include:
       file: db\changelog\v1\tables\pinskdrev\create-pinskdrev-item-v1.yml
   - include:
+      file: db\changelog\v1\tables\pinskdrev\create-pinskdrev-ru-item-v1.yml
+  - include:
       file: db\changelog\v1\tables\triya\create-triya-item-v1.yml
   - include:
       file: db\changelog\v1\tables\angstrem\create-angstrem-v1.yml

@@ -1,9 +1,11 @@
 version: '4'
 services:
   front:
-    image: maxdevdoc/fpf-frontend:0.0.0.5
+    image: maxdevdoc/fpf-frontend:0.1.1
     ports:
       - "8080:80"
+    depends_on:
+      - back
   postgres:
     image: postgres:16.0
     container_name: postgresdb
@@ -14,7 +16,7 @@ services:
     ports:
       - "5432:5432"
   back:
-    image: shevajoker/pdrw:0.0.0.4
+    image: shevajoker/pdrw:0.0.0.8
     build:
       context: .
     container_name: back
