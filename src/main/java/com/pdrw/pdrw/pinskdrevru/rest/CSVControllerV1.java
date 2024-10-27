@@ -1,12 +1,14 @@
 package com.pdrw.pdrw.pinskdrevru.rest;
 
 import com.pdrw.pdrw.pinskdrevru.service.CSVService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +18,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @RestController
-@RequestMapping("/api/v1/download/pinskdrev-ru")
+@RequestMapping("/api/v1/pinskdrev-ru/download")
 @RequiredArgsConstructor
 @Tag(name = "PinskdrevRu")
 public class CSVControllerV1 {
 
     private final CSVService csvService;
 
+    @Operation(summary = "Download csv file")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/csv")
     public ResponseEntity<?> getExcel() {
         Path file = csvService.getCSVPath();

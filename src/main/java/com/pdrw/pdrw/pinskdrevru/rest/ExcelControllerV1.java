@@ -18,14 +18,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @RestController
-@RequestMapping("/api/v1/download/pinskdrev-ru")
+@RequestMapping("/api/v1/pinskdrev-ru/download")
 @RequiredArgsConstructor
 @Tag(name = "PinskdrevRu")
 public class ExcelControllerV1 {
 
     private final ExcelService excelService;
 
-    @Operation(summary = "Download data")
+    @Operation(summary = "Download excel file")
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/excel")
     public ResponseEntity<?> getExcel() {
