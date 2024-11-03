@@ -45,11 +45,11 @@ public class PinskdrevDataServiceImpl implements PinskdrevDataService {
         JsonNode items = Optional.ofNullable(jsonNode).orElseThrow();
         for (JsonNode item : items) {
             Pinskdrev pinskdrevToSave = new Pinskdrev();
-                    pinskdrevToSave.setArticle(item.get("data_id") != null ? item.get("data_id").asText() : "-");
-                    pinskdrevToSave.setName(item.get("title") != null ? item.get("title").asText() : "-");
-                    pinskdrevToSave.setLink(item.get("link") != null ? item.get("link").asText() : "-");
-                    pinskdrevToSave.setImage(item.get("main_photo") != null ? item.get("main_photo").asText() : "-");
-                    pinskdrevToSave.setPriceOld(item.get("old_price") != null ? BigDecimal.valueOf(item.get("old_price").asInt()) : BigDecimal.ZERO);
+                    pinskdrevToSave.setArticle(item.get("dataId") != null ? item.get("dataId").asText() : "-");
+                    pinskdrevToSave.setName(item.get("nameProduct") != null ? item.get("nameProduct").asText() : "-");
+                    pinskdrevToSave.setLink(item.get("uriProduct") != null ? item.get("uriProduct").asText() : "-");
+                    pinskdrevToSave.setImage(item.get("photo") != null ? item.get("photo").asText() : "-");
+                    pinskdrevToSave.setPriceOld(item.get("oldPrice") != null ? BigDecimal.valueOf(item.get("oldPrice").asInt()) : BigDecimal.ZERO);
                     pinskdrevToSave.setPriceNew(item.get("price") != null ? BigDecimal.valueOf(item.get("price").asInt()) : BigDecimal.ZERO);
                     pinskdrevToSave.setDiscount(calculateDiscount(item));
                     pinskdrevToSave.setCreateDate(new Date());
@@ -80,7 +80,7 @@ public class PinskdrevDataServiceImpl implements PinskdrevDataService {
     }
 
     private void getCharacteristics(Pinskdrev pinskdrevToSave, JsonNode item) {
-        JsonNode characteristics = item.get("characteristics");
+        JsonNode characteristics = item.get("properties");
         if (characteristics != null) {
             pinskdrevToSave.setType(characteristics.get("Тип") != null ? characteristics.get("Тип").asText() : "-");
             pinskdrevToSave.setLength(characteristics.get("Длина (мм)") != null ? convertToInteger(characteristics.get("Длина (мм)").asText()) : 0);

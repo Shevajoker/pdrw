@@ -30,4 +30,6 @@ public interface PinskdrevRuService {
     List<PinskdrevRu> getNotUpdatedItems(Integer limit);
 
     Map<String, List<PinskdrevRu>> getChangedItems(Integer limit);
+
+    List<PinskdrevRu> findActualByType(String type);
 }

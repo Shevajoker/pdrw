@@ -20,6 +20,14 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
 
     List<PinskdrevRu> findByTypeLike(String article);
 
+    @Query("""
+             SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             FROM PinskdrevRu as p
+             WHERE p.actual = true
+             AND p.type = ?1
+            """)
+    List<PinskdrevRu> findActualByType(String article);
+
     @Query("SELECT round (AVG(p.priceNew), 2) FROM PinskdrevRu as p WHERE p.actual = true")
     BigDecimal getAveragePrice();
 
@@ -35,14 +43,14 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
     @Query("SELECT p.article FROM PinskdrevRu p group by p.article")
     List<String> findAllArticles();
 
-    @Query("SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM PinskdrevRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew ASC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM PinskdrevRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew ASC LIMIT 1")
     Optional<PinskdrevRu> findByTypeAndMinPrice(String type);
 
-    @Query("SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM PinskdrevRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew DESC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM PinskdrevRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew DESC LIMIT 1")
     Optional<PinskdrevRu> findByTypeAndMaxPrice(String type);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
              FROM PinskdrevRu p
              WHERE p.actual = true
              AND p.createDate BETWEEN :fromDate and :toDate
@@ -53,7 +61,7 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
     List<PinskdrevRu> findNewCreatedItems(Date fromDate, Date toDate, Integer limit);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
              FROM PinskdrevRu as p
              WHERE p.actual = true
              AND p.dateUpdate < :date
@@ -63,7 +71,7 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
     List<PinskdrevRu> findNotUpdatedItems(Date date, Integer limit);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
              FROM PinskdrevRu as p
              WHERE p.actual = true
              AND p.createDate BETWEEN :fromDate and :toDate
@@ -74,7 +82,7 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
     List<PinskdrevRu> getChangedItems(Date fromDate, Date toDate, Integer limit);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.pinskdrev.model.Pinskdrev(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
              FROM PinskdrevRu as p
              WHERE p.article = :article
              ORDER BY p.dateUpdate DESC
