@@ -1,4 +1,4 @@
-package com.pdrw.pdrw.pinskdrevRuru.service.impl;
+package com.pdrw.pdrw.pinskdrevru.service.impl;
 
 import com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu;
 import com.pdrw.pdrw.pinskdrevru.model.wrappers.PinskdrevRuAverageCategoryData;

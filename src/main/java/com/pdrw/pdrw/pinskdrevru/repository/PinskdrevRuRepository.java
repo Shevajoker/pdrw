@@ -25,6 +25,8 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
              FROM PinskdrevRu as p
              WHERE p.actual = true
              AND p.type = ?1
+             ORDER BY p.priceNew
+             ASC
             """)
     List<PinskdrevRu> findActualByType(String article);
 
