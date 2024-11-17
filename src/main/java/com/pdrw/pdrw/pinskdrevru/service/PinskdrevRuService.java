@@ -32,4 +32,8 @@ public interface PinskdrevRuService {
     Map<String, List<PinskdrevRu>> getChangedItems(Integer limit);
 
     List<PinskdrevRu> findActualByType(String type);
+
+    List<PinskdrevRu> findActualWithSaleByType(String type);
+
+    Integer countItemsByType(String type);
 }

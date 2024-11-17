@@ -127,6 +127,16 @@ public class PinskdrevRuServiceImpl implements PinskdrevRuService {
         return pinskdrevRuRepository.findActualByType(type);
     }
 
+    @Override
+    public List<PinskdrevRu> findActualWithSaleByType(String type) {
+        return pinskdrevRuRepository.findActualWithSaleByType(type);
+    }
+
+    @Override
+    public Integer countItemsByType(String type) {
+        return pinskdrevRuRepository.countItemsByType(type);
+    }
+
     private Map<String, List<PinskdrevRu>> getAtricleCahngeData() {
         Map<String, List<PinskdrevRu>> map = new HashMap<>();
         List<String> atricles = pinskdrevRuRepository.findAllArticles();
