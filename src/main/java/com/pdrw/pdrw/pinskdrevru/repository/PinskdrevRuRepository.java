@@ -91,4 +91,23 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
              LIMIT 2
             """)
     List<PinskdrevRu> getItemWithPrevious(String article);
+
+    @Query("""
+             SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             FROM PinskdrevRu as p
+             WHERE p.actual = true
+             AND p.priceOld > 0
+             AND p.type = ?1
+             ORDER BY p.priceNew
+             ASC
+            """)
+    List<PinskdrevRu> findActualWithSaleByType(String type);
+
+    @Query("""
+             SELECT count (p.id)
+             FROM PinskdrevRu as p
+             WHERE p.actual = true
+             AND p.type = ?1
+            """)
+    Integer countItemsByType(String type);
 }
