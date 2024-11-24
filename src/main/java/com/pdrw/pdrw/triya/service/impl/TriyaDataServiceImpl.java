@@ -45,12 +45,12 @@ public class TriyaDataServiceImpl implements TriyaDataService {
         JsonNode items = Optional.ofNullable(jsonNode).orElseThrow();
         for (JsonNode item : items) {
             Triya triyaToSave = Triya.builder()
-                    .article(item.get("url") != null ? item.get("url").asText().split("model=")[1] : "-")
-                    .name(item.get("title") != null ? item.get("title").asText() : "-")
-                    .link(item.get("url") != null ? item.get("url").asText() : "-")
-                    .image(item.get("main_image_url") != null ? item.get("main_image_url").asText() : "-")
-                    .priceOld(item.get("old_price") != null ? BigDecimal.valueOf(item.get("old_price").asInt()) : BigDecimal.ZERO)
-                    .priceNew(item.get("price") != null ? BigDecimal.valueOf(Integer.parseInt(item.get("price").asText().replaceAll(" ", ""))) : BigDecimal.ZERO)
+                    .article(item.get("dataId") != null ? item.get("dataId").asText() : "-")
+                    .name(item.get("nameProduct") != null ? item.get("nameProduct").asText() : "-")
+                    .link(item.get("uriProduct") != null ? item.get("uriProduct").asText() : "-")
+                    .image(item.get("photo") != null ? item.get("photo").asText() : "-")
+                    .priceOld(item.get("oldPrice") != null ? BigDecimal.valueOf(item.get("oldPrice").asInt()) : BigDecimal.ZERO)
+                    .priceNew(item.get("price").asText() != null ? BigDecimal.valueOf(Integer.parseInt(item.get("price").asText().replaceAll(" ", ""))) : BigDecimal.ZERO)
                     .discount(calculateDiscount(item))
                     .createDate(new Date())
                     .dateUpdate(new Date())
@@ -81,29 +81,22 @@ public class TriyaDataServiceImpl implements TriyaDataService {
     }
 
     private void getCharacteristics(Triya triya, JsonNode item) {
-        JsonNode characteristics = item.get("characteristics");
+        JsonNode characteristics = item.get("properties");
         if (characteristics != null) {
-            JsonNode dimensions = characteristics.get("Размеры (мм)");
-            if (dimensions != null) {
-                triya.setLength(characteristics.get("Габаритная глубина") != null ? convertToInteger(characteristics.get("Габаритная глубина").asText()) : 0);
-                triya.setWidth(characteristics.get("Габаритная ширина") != null ? convertToInteger(characteristics.get("Габаритная ширина").asText()) : 0);
-                triya.setHeight(characteristics.get("Габаритная высота") != null ? convertToInteger(characteristics.get("\"Габаритная высота\"").asText()) : 0);
-
-                List<String> length =  dimensions.findValuesAsText("Габаритная глубина");
-                List<String> width =  dimensions.findValuesAsText("Габаритная ширина");
-                List<String> weight =  dimensions.findValuesAsText("Габаритная высота");
-                if (length != null && !length.isEmpty()) {
-                    triya.setLength(Integer.parseInt(length.getFirst().replaceAll(" ", "")));
-                }
-                if (width != null && !width.isEmpty()) {
-                    triya.setWidth(Integer.parseInt(width.getFirst().replaceAll(" ", "")));
-                }
-                if (weight != null && !weight.isEmpty()) {
-                    triya.setWeight(Integer.parseInt(weight.getFirst().replaceAll(" ", "")));
-                }
+            triya.setType(characteristics.get("Тип") != null ? characteristics.get("Тип").asText() : "-");
+            List<String> length =  characteristics.findValuesAsText("Габаритная глубина");
+            List<String> width =  characteristics.findValuesAsText("Габаритная ширина");
+            List<String> weight =  characteristics.findValuesAsText("Габаритная высота");
+            if (length != null && !length.isEmpty()) {
+                triya.setLength(Integer.parseInt(length.getFirst().replaceAll(" ", "")));
+            }
+            if (width != null && !width.isEmpty()) {
+                triya.setWidth(Integer.parseInt(width.getFirst().replaceAll(" ", "")));
+            }
+            if (weight != null && !weight.isEmpty()) {
+                triya.setWeight(Integer.parseInt(weight.getFirst().replaceAll(" ", "")));
             }
         }
-
     }
 
     private Double convertVolumeToInteger(String text) {
@@ -130,7 +123,7 @@ public class TriyaDataServiceImpl implements TriyaDataService {
 
     private BigDecimal calculateDiscount(JsonNode item) {
 
-        BigDecimal priceOld = item.get("old_price") != null ? BigDecimal.valueOf(item.get("old_price").asInt()) : BigDecimal.ZERO;
+        BigDecimal priceOld = item.get("oldPrice") != null ? BigDecimal.valueOf(item.get("oldPrice").asInt()) : BigDecimal.ZERO;
         BigDecimal priceNew = item.get("price") != null ? BigDecimal.valueOf(Integer.parseInt(item.get("price").asText().replaceAll(" ", ""))) : BigDecimal.ZERO;
 
         return priceOld.subtract(priceNew);

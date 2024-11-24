@@ -361,7 +361,7 @@
   "uriProduct": "https://pinskdrev.ru/catalog/korpusnaya-mebel/krovati/krovat-dvoynaya-16-1-p-349-16-1-ot-n-m-dlya-spalni/massivdubaslonovayakostszolocheniemdelfin2000x1400mm2150x1652x1045mm/",
   "price": 129370,
   "oldPrice": 152200,
-  "photo": "web/catalogfiles/catalog/offers/krovat_dvoinaya_alezi_16-1_p349_16-1_slon_kost.jpg",
+  "photo": "https://pinskdrev.ru/web/catalogfiles/catalog/offers/krovat_dvoinaya_alezi_16-1_p349_16-1_slon_kost.jpg",
   "properties": {
     "Тип": "двуспальная кровать",
     "Длина (мм)": "2180 мм",
@@ -398,4 +398,4 @@
     "Рекомендуемая высота матраса (мм)": "230",
     "Изножье": "низкое"
   }
-},
+}]

@@ -1,8 +1,9 @@
-package com.pdrw.pdrw.pinskdrevRuru.service.impl;
+package com.pdrw.pdrw.pinskdrevru.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pdrw.pdrw.pinskdrevru.client.AlertClient;
 import com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu;
 import com.pdrw.pdrw.pinskdrevru.repository.PinskdrevRuRepository;
 import com.pdrw.pdrw.pinskdrevru.service.PinskdrevRuDataService;
@@ -22,19 +23,24 @@ import java.util.regex.Pattern;
 @Service
 public class PinskdrevRuDataServiceImpl implements PinskdrevRuDataService {
 
+    public static final String DEFAULT_STRING_VALUE = "-";
     private final ObjectMapper objectMapper;
     private final PinskdrevRuRepository pinskdrevRuRepository;
+    private final AlertClient alertClient;
 
     public PinskdrevRuDataServiceImpl(ObjectMapper objectMapper,
-                                      PinskdrevRuRepository pinskdrevRuRepository) {
+                                      PinskdrevRuRepository pinskdrevRuRepository,
+                                      AlertClient alertClient) {
         this.objectMapper = objectMapper;
         this.pinskdrevRuRepository = pinskdrevRuRepository;
+        this.alertClient = alertClient;
     }
 
 
     @Override
     @Transactional
     public int setData(String data) {
+        StringBuilder message = new StringBuilder();
         JsonNode jsonNode;
         try {
             jsonNode = objectMapper.readTree(data);
@@ -45,7 +51,7 @@ public class PinskdrevRuDataServiceImpl implements PinskdrevRuDataService {
         JsonNode items = Optional.ofNullable(jsonNode).orElseThrow();
         for (JsonNode item : items) {
             PinskdrevRu pinskdrevRuToSave = new PinskdrevRu();
-            pinskdrevRuToSave.setArticle(item.get("dataId") != null ? item.get("dataId").asText() : "-");
+            pinskdrevRuToSave.setArticle(item.get("dataId") != null ? item.get("dataId").asText() : DEFAULT_STRING_VALUE);
             pinskdrevRuToSave.setName(item.get("nameProduct") != null ? item.get("nameProduct").asText() : "-");
             pinskdrevRuToSave.setLink(item.get("uriProduct") != null ? item.get("uriProduct").asText() : "-");
             pinskdrevRuToSave.setImage(item.get("photo") != null ? item.get("photo").asText() : "-");
@@ -55,6 +61,7 @@ public class PinskdrevRuDataServiceImpl implements PinskdrevRuDataService {
             pinskdrevRuToSave.setCreateDate(new Date());
             pinskdrevRuToSave.setDateUpdate(new Date());
             getCharacteristics(pinskdrevRuToSave, item);
+            validateItem(pinskdrevRuToSave, message);
             List<PinskdrevRu> pinskdrevRuList = pinskdrevRuRepository.findByArticleOrderByDateUpdateDesc(pinskdrevRuToSave.getArticle());
             if (!pinskdrevRuList.isEmpty()) {
                 PinskdrevRu pinskdrevRu = pinskdrevRuList.getFirst();
@@ -75,8 +82,35 @@ public class PinskdrevRuDataServiceImpl implements PinskdrevRuDataService {
                 count++;
             }
         }
+if (!message.isEmpty()) {
+    alertClient.sendAlert(message.toString());
+} else {
+    alertClient.sendAlert("Nice cock!");
+}
 
         return count;
+    }
+
+    private void validateItem(PinskdrevRu pinskdrevRuToSave, StringBuilder message) {
+        if (pinskdrevRuToSave.getArticle().equals(DEFAULT_STRING_VALUE)) {
+            message.append("- no dataId -").append(System.lineSeparator());
+        }
+        if (pinskdrevRuToSave.getName().equals(DEFAULT_STRING_VALUE)) {
+            message.append("- no nameProduct -").append(System.lineSeparator());
+        }
+        if (pinskdrevRuToSave.getLink().equals(DEFAULT_STRING_VALUE)) {
+            message.append("- no uriProduct -").append(System.lineSeparator());
+        }
+        if (pinskdrevRuToSave.getImage().equals(DEFAULT_STRING_VALUE)) {
+            message.append("- no photo -").append(System.lineSeparator());
+        }
+        if (pinskdrevRuToSave.getPriceNew().compareTo(BigDecimal.ZERO) == 0) {
+            message.append("- no price -").append(System.lineSeparator());
+        }
+
+        if (message.isEmpty()) {
+            message.append("====================================").append(System.lineSeparator());
+        }
     }
 
     private void getCharacteristics(PinskdrevRu pinskdrevRuToSave, JsonNode item) {
