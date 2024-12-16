@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.pdrw</groupId>
     <artifactId>pdrw</artifactId>
-    <version>0.0.0.14</version>
+    <version>0.0.0.15</version>
     <name>pdrw</name>
     <description>Parsing data read write</description>
     <url/>
@@ -34,6 +34,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -168,6 +174,12 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
 
     </dependencies>
 

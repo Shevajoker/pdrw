@@ -28,3 +28,7 @@ application:
   config:
     alert-url: http://185.244.50.227:5000/send_message
     alert-key: kWQYKdwtI2450aX7xGmj
+
+logging:
+  file:
+    name: "classpath: /log/datalog.log"

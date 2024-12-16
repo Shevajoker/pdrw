@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -82,35 +83,29 @@ public class PinskdrevRuDataServiceImpl implements PinskdrevRuDataService {
                 count++;
             }
         }
-if (!message.isEmpty()) {
-    alertClient.sendAlert(message.toString());
-} else {
-    alertClient.sendAlert("Nice cock!");
-}
-
         return count;
     }
 
     private void validateItem(PinskdrevRu pinskdrevRuToSave, StringBuilder message) {
         if (pinskdrevRuToSave.getArticle().equals(DEFAULT_STRING_VALUE)) {
-            message.append("- no dataId -").append(System.lineSeparator());
+            message.append("- no dataId -");
         }
         if (pinskdrevRuToSave.getName().equals(DEFAULT_STRING_VALUE)) {
-            message.append("- no nameProduct -").append(System.lineSeparator());
+            message.append("- no nameProduct -");
         }
         if (pinskdrevRuToSave.getLink().equals(DEFAULT_STRING_VALUE)) {
-            message.append("- no uriProduct -").append(System.lineSeparator());
+            message.append("- no uriProduct -");
         }
         if (pinskdrevRuToSave.getImage().equals(DEFAULT_STRING_VALUE)) {
-            message.append("- no photo -").append(System.lineSeparator());
+            message.append("- no photo -");
         }
         if (pinskdrevRuToSave.getPriceNew().compareTo(BigDecimal.ZERO) == 0) {
-            message.append("- no price -").append(System.lineSeparator());
+            message.append("- no price -");
         }
-
-        if (message.isEmpty()) {
-            message.append("====================================").append(System.lineSeparator());
+        if (!message.isEmpty()) {
+            message.append(System.lineSeparator());
         }
+        log.info(message.toString());
     }
 
     private void getCharacteristics(PinskdrevRu pinskdrevRuToSave, JsonNode item) {
@@ -152,6 +147,9 @@ if (!message.isEmpty()) {
         BigDecimal priceOld = item.get("oldPrice") != null ? BigDecimal.valueOf(item.get("oldPrice").asInt()) : BigDecimal.ZERO;
         BigDecimal priceNew = item.get("price") != null ? BigDecimal.valueOf(item.get("price").asInt()) : BigDecimal.ZERO;
 
-        return priceOld.subtract(priceNew);
+        if (priceOld.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.ZERO;
+        }
+        return priceOld.subtract(priceNew).divide(priceOld, 2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
     }
 }
