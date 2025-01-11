@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202412222051
+      author: AlexandrSh
+      changes:
+        - createTable:
+            tableName: archive_pinskdrev_ru
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: age
+                  type: integer
+              - column:
+                  name: url
+                  type: text
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: count
+                  type: integer
