@@ -110,4 +110,11 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
              AND p.type = ?1
             """)
     Integer countItemsByType(String type);
+
+    @Query("""
+             SELECT sum(p.priceNew)
+             FROM PinskdrevBy as p
+             WHERE p.actual = true
+            """)
+    BigDecimal summPriceNewActualTrue();
 }
