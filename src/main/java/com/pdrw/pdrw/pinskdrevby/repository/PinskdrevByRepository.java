@@ -15,14 +15,14 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
 
     List<PinskdrevBy> findByArticleOrderByDateUpdateDesc(String article);
 
-    @Query("SELECT p.type FROM PinskdrevBy p group by p.type")
+    @Query("SELECT p.type FROM TriyaRu p group by p.type")
     List<String> findAllTypes();
 
     List<PinskdrevBy> findByTypeLike(String article);
 
     @Query("""
              SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
-             FROM PinskdrevBy as p
+             FROM TriyaRu as p
              WHERE p.actual = true
              AND p.type = ?1
              ORDER BY p.priceNew
@@ -30,33 +30,33 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
             """)
     List<PinskdrevBy> findActualByType(String article);
 
-    @Query("SELECT round (AVG(p.priceNew), 2) FROM PinskdrevBy as p WHERE p.actual = true")
+    @Query("SELECT round (AVG(p.priceNew), 2) FROM TriyaRu as p WHERE p.actual = true")
     BigDecimal getAveragePrice();
 
     @Modifying
-    @Query("UPDATE PinskdrevBy SET actual = false WHERE article = ?1")
+    @Query("UPDATE TriyaRu SET actual = false WHERE article = ?1")
     void markActualFalse(String article);
 
     Long countByActualTrue();
 
-    @Query("SELECT round (AVG(p.priceNew), 2) FROM PinskdrevBy as p WHERE p.actual = true and p.type like :type and p.priceNew != 0")
+    @Query("SELECT round (AVG(p.priceNew), 2) FROM TriyaRu as p WHERE p.actual = true and p.type like :type and p.priceNew != 0")
     BigDecimal getAveragePriceByType(String type);
 
-    @Query("SELECT p.article FROM PinskdrevBy p group by p.article")
+    @Query("SELECT p.article FROM TriyaRu p group by p.article")
     List<String> findAllArticles();
 
-    @Query("SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM PinskdrevBy p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew ASC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM TriyaRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew ASC LIMIT 1")
     Optional<PinskdrevBy> findByTypeAndMinPrice(String type);
 
-    @Query("SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM PinskdrevBy p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew DESC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM TriyaRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew DESC LIMIT 1")
     Optional<PinskdrevBy> findByTypeAndMaxPrice(String type);
 
     @Query("""
              SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
-             FROM PinskdrevBy p
+             FROM TriyaRu p
              WHERE p.actual = true
              AND p.createDate BETWEEN :fromDate and :toDate
-             AND (select count(*) from PinskdrevBy as p2 where p2.article = p.article) = 1
+             AND (select count(*) from TriyaRu as p2 where p2.article = p.article) = 1
              ORDER BY p.id ASC
              LIMIT :limit
             """)
@@ -64,7 +64,7 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
 
     @Query("""
              SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
-             FROM PinskdrevBy as p
+             FROM TriyaRu as p
              WHERE p.actual = true
              AND p.dateUpdate < :date
              ORDER BY p.id ASC
@@ -74,10 +74,10 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
 
     @Query("""
              SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
-             FROM PinskdrevBy as p
+             FROM TriyaRu as p
              WHERE p.actual = true
              AND p.createDate BETWEEN :fromDate and :toDate
-             AND (select count(*) from PinskdrevBy as p2 where p2.article = p.article) > 1
+             AND (select count(*) from TriyaRu as p2 where p2.article = p.article) > 1
              ORDER BY p.id ASC
              LIMIT :limit
             """)
@@ -85,7 +85,7 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
 
     @Query("""
              SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
-             FROM PinskdrevBy as p
+             FROM TriyaRu as p
              WHERE p.article = :article
              ORDER BY p.dateUpdate DESC
              LIMIT 2
@@ -94,7 +94,7 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
 
     @Query("""
              SELECT new com.pdrw.pdrw.pinskdrevby.model.PinskdrevBy(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
-             FROM PinskdrevBy as p
+             FROM TriyaRu as p
              WHERE p.actual = true
              AND p.priceOld > 0
              AND p.type = ?1
@@ -105,7 +105,7 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
 
     @Query("""
              SELECT count (p.id)
-             FROM PinskdrevBy as p
+             FROM TriyaRu as p
              WHERE p.actual = true
              AND p.type = ?1
             """)
@@ -113,7 +113,7 @@ public interface PinskdrevByRepository extends JpaRepository<PinskdrevBy, UUID> 
 
     @Query("""
              SELECT sum(p.priceNew)
-             FROM PinskdrevBy as p
+             FROM TriyaRu as p
              WHERE p.actual = true
             """)
     BigDecimal summPriceNewActualTrue();

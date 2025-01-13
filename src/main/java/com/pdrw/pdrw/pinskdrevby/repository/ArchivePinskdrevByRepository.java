@@ -10,12 +10,12 @@ import java.util.UUID;
 
 public interface ArchivePinskdrevByRepository extends JpaRepository<ArchivePinskdrevBy, UUID> {
 
-    @Query("select a from ArchivePinskdrevBy a order by a.age asc, a.url asc")
+    @Query("select a from ArchiveTriyaRu a order by a.age asc, a.url asc")
     List<ArchivePinskdrevBy> findAllOrder();
 
-    @Query("select '001' as id, a.age, a.url, 'des' as description from ArchivePinskdrevBy a group by a.age, a.url")
+    @Query("select '001' as id, a.age, a.url, 'des' as description from ArchiveTriyaRu a group by a.age, a.url")
     List<String> findAllUrls();
 
-    @Query("select a.age, a.url, count(a.url) from ArchivePinskdrevBy a group by a.age, a.url")
+    @Query("select a.age, a.url, count(a.url) from ArchiveTriyaRu a group by a.age, a.url")
     List<ArchivePinskdrevByDto> findAllDtos();
 }
