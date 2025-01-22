@@ -13,6 +13,8 @@ databaseChangeLog:
       file: db\changelog\v1\tables\pinskdrev\archive-pinskdrev-ru-v1.yml
   - include:
       file: db\changelog\v1\tables\triya\create-triya-v1.yml
+  - include:
+      file: db\changelog\v1\tables\dashboard\create-table-dashboard.sql
 #  - include:
 #      file: db\changelog\v1\tables\angstrem\create-angstrem-v1.yml
 

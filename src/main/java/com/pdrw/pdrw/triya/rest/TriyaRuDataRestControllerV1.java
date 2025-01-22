@@ -1,5 +1,6 @@
 package com.pdrw.pdrw.triya.rest;
 
+import com.pdrw.pdrw.dashboard.service.DashboardService;
 import com.pdrw.pdrw.triya.model.TriyaRu;
 import com.pdrw.pdrw.triya.model.wrappers.TriyaRuAverageCategoryData;
 import com.pdrw.pdrw.triya.model.wrappers.TriyaRuData;
@@ -24,12 +25,16 @@ public class TriyaRuDataRestControllerV1 {
 
     private final TriyaRuDataService dataService;
     private final TriyaRuService triyaRuService;
+    private final DashboardService dashboardService;
 
     @Operation(summary = "Download data")
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/set-data")
     public int setData(@RequestBody String data) {
-        return dataService.setData(data);
+        int i = dataService.setData(data);
+        List<TriyaRu> all = triyaRuService.findAll();
+        dashboardService.createDashboardTriya(all);
+        return i;
     }
 
     @Operation(summary = "Get all items")
