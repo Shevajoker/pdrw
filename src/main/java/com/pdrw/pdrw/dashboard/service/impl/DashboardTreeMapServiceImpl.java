@@ -4,8 +4,8 @@ import com.pdrw.pdrw.dashboard.entity.treemap.DashboardTreeMap;
 import com.pdrw.pdrw.dashboard.entity.treemap.Extra;
 import com.pdrw.pdrw.dashboard.entity.treemap.dto.DashboardTreeMapResponse;
 import com.pdrw.pdrw.dashboard.service.DashboardTreeMapService;
-import com.pdrw.pdrw.pinskdrevby.repository.PinskdrevByRepository;
 import com.pdrw.pdrw.pinskdrevru.repository.PinskdrevRuRepository;
+import com.pdrw.pdrw.triya.repository.TriyaRuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class DashboardTreeMapServiceImpl implements DashboardTreeMapService {
 
     private final PinskdrevRuRepository pinskdrevRuRepository;
-    private final PinskdrevByRepository pinskdrevByRepository;
+    private final TriyaRuRepository triyaRuRepository;
 
     @Override
     public DashboardTreeMapResponse getDashboardTreeMapResponse() {
@@ -26,11 +26,11 @@ public class DashboardTreeMapServiceImpl implements DashboardTreeMapService {
         pinskdrevRu.setSize(pinskdrevRuRepository.summPriceNewActualTrue());
         response.getDashboardTreeMaps().add(pinskdrevRu);
 
-        DashboardTreeMap pinskdrevBy = new DashboardTreeMap();
-        pinskdrevBy.setName("pinskdrev.by");
-        pinskdrevBy.setExtra(new Extra().setLabel("pinskdrev.by"));
-        pinskdrevBy.setSize(pinskdrevByRepository.summPriceNewActualTrue());
-        response.getDashboardTreeMaps().add(pinskdrevBy);
+        DashboardTreeMap triyaRu = new DashboardTreeMap();
+        triyaRu.setName("triya.ru");
+        triyaRu.setExtra(new Extra().setLabel("triya.ru"));
+        triyaRu.setSize(triyaRuRepository.summPriceNewActualTrue());
+        response.getDashboardTreeMaps().add(triyaRu);
 
         return response;
     }
