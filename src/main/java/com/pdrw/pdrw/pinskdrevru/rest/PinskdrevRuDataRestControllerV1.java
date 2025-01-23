@@ -1,5 +1,6 @@
 package com.pdrw.pdrw.pinskdrevru.rest;
 
+import com.pdrw.pdrw.dashboard.service.DashboardService;
 import com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu;
 import com.pdrw.pdrw.pinskdrevru.model.wrappers.PinskdrevRuAverageCategoryData;
 import com.pdrw.pdrw.pinskdrevru.model.wrappers.PinskdrevRuData;
@@ -24,12 +25,16 @@ public class PinskdrevRuDataRestControllerV1 {
 
     private final PinskdrevRuDataService pinskdrevRuDataService;
     private final PinskdrevRuService pinskdrevRuService;
+    private final DashboardService dashboardService;
 
     @Operation(summary = "Download data")
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/set-data")
     public int setData(@RequestBody String data) {
-        return pinskdrevRuDataService.setData(data);
+        int i = pinskdrevRuDataService.setData(data);
+        List<PinskdrevRu> all = pinskdrevRuService.findAll();
+        dashboardService.createDashboardPinskdrevRu(all);
+        return i;
     }
 
     @Operation(summary = "Get all items")
