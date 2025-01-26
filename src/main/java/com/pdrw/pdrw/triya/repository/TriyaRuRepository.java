@@ -117,4 +117,9 @@ public interface TriyaRuRepository extends JpaRepository<TriyaRu, UUID> {
              WHERE p.actual = true
             """)
     BigDecimal summPriceNewActualTrue();
+
+    @Query("""
+            select count(*) from TriyaRu as t where t.actual = true and t.priceNew >= ?1 and t.priceNew < ?2
+            """)
+    Integer findDataForDashboardLineChart(BigDecimal priceMin, BigDecimal priceMax);
 }

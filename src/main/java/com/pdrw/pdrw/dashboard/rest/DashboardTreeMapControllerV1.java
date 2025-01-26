@@ -1,7 +1,9 @@
 package com.pdrw.pdrw.dashboard.rest;
 
 import com.pdrw.pdrw.dashboard.entity.Dashboard;
+import com.pdrw.pdrw.dashboard.entity.linechart.dto.DashboardLineChartResponse;
 import com.pdrw.pdrw.dashboard.entity.treemap.dto.DashboardTreeMapResponse;
+import com.pdrw.pdrw.dashboard.service.DashboardLineChartService;
 import com.pdrw.pdrw.dashboard.service.DashboardService;
 import com.pdrw.pdrw.dashboard.service.DashboardTreeMapService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +25,7 @@ import java.util.List;
 public class DashboardTreeMapControllerV1 {
 
     private final DashboardTreeMapService dashboardTreeMapService;
+    private final DashboardLineChartService dashboardLineChartService;
     private final DashboardService dashboardService;
 
     @Operation(summary = "Get DashboardTreeMap")
@@ -30,6 +33,14 @@ public class DashboardTreeMapControllerV1 {
     @GetMapping("/tree-map")
     public ResponseEntity<DashboardTreeMapResponse> getDashboardTreeMap() {
         DashboardTreeMapResponse result = dashboardTreeMapService.getDashboardTreeMapResponse();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get DashboardTreeMap")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/line-chart")
+    public ResponseEntity<DashboardLineChartResponse> getDashboardLineChart() {
+        DashboardLineChartResponse result = dashboardLineChartService.getDashboardLineChartResponse();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -117,4 +117,9 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
              WHERE p.actual = true
             """)
     BigDecimal summPriceNewActualTrue();
+
+    @Query("""
+            select count(*) from PinskdrevRu as p where p.actual = true and p.priceNew >= ?1 and p.priceNew < ?2
+            """)
+    Integer findDataForDashboardLineChart(BigDecimal priceMin, BigDecimal priceMax);
 }
