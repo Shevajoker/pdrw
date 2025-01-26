@@ -1,6 +1,4 @@
 databaseChangeLog:
-#  - include:
-#      file: db\changelog\v1\tables\hoff\create-table-hoff-item-v1.yml
   - include:
       file: db\changelog\v1\tables\user\create-table-user-v1.yml
   - include:
@@ -15,13 +13,7 @@ databaseChangeLog:
       file: db\changelog\v1\tables\triya\create-triya-v1.yml
   - include:
       file: db\changelog\v1\tables\dashboard\create-table-dashboard.sql
-#  - include:
-#      file: db\changelog\v1\tables\angstrem\create-angstrem-v1.yml
 
 
   - include:
       file: db\changelog\v1\data\initial-data.yaml
-#  - include:
-#      file: db\changelog\v1\constraint\create-constraint-item-v1.yml
-#  - include:
-#      file: db\changelog\v1\constraint\create-constraint-price-v1.yml
