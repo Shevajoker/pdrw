@@ -20,7 +20,7 @@ public class AuthenticationService {
      * Регистрация пользователя
      *
      * @param request данные пользователя
-     * @return токен
+     * @return токен и имя пользователя
      */
     public JwtAuthenticationResponse signUp(SignUpRequest request, String lang) {
 
@@ -35,14 +35,14 @@ public class AuthenticationService {
         userService.create(user);
 
         var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponse(jwt, user.getUsername());
     }
 
     /**
      * Аутентификация пользователя
      *
      * @param request данные пользователя
-     * @return токен
+     * @return токен и имя пользователя
      */
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -55,6 +55,6 @@ public class AuthenticationService {
                 .loadUserByUsername(request.getEmail());
 
         var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponse(jwt, user.getUsername());
     }
 }
