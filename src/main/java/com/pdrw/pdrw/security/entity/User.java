@@ -1,11 +1,13 @@
 package com.pdrw.pdrw.security.entity;
 
+import com.pdrw.pdrw.subscription.entity.Subscription;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -39,6 +41,11 @@ public class User implements UserDetails {
 
     @Column(name = "lang", nullable = false)
     private String lang;
+
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    @ToString.Exclude
+    private List<Subscription> subscriptions = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
