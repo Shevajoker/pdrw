@@ -19,6 +19,17 @@ spring:
     drop-first: false
     change-log: db/changelog/db.changelog-master.yml
     default-schema: public
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fpframework@gmail.com
+    password: aria rupv ekkc rafg
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 token:
   signing:
     key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
@@ -32,3 +43,7 @@ application:
 logging:
   file:
     name: "classpath: /log/datalog.log"
+
+link:
+  active:
+    host: http://185.244.50.227:8069

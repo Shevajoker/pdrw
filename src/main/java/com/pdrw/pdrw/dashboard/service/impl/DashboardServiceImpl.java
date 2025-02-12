@@ -5,9 +5,9 @@ import com.pdrw.pdrw.dashboard.repository.DashboardRepository;
 import com.pdrw.pdrw.dashboard.service.DashboardService;
 import com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu;
 import com.pdrw.pdrw.triya.model.TriyaRu;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
