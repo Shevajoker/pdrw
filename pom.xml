@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.pdrw</groupId>
     <artifactId>pdrw</artifactId>
-    <version>0.0.0.21</version>
+    <version>0.0.0.22</version>
     <name>pdrw</name>
     <description>Parsing data read write</description>
     <url/>
@@ -166,6 +166,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
 
         <!--        <dependency>-->
 <!--            <groupId>org.junit.jupiter</groupId>-->
