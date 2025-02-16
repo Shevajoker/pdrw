@@ -6,6 +6,7 @@ import com.pdrw.pdrw.dashboard.entity.bubblechart.dto.DashboardBubbleChartRespon
 import com.pdrw.pdrw.dashboard.service.DashboardBubbleChartService;
 import com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu;
 import com.pdrw.pdrw.pinskdrevru.repository.PinskdrevRuRepository;
+import com.pdrw.pdrw.triya.repository.TriyaRuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +21,21 @@ import java.util.stream.Collectors;
 public class DashboardBubbleChartServiceImpl implements DashboardBubbleChartService {
 
     private final PinskdrevRuRepository pinskdrevRuRepository;
+    private final TriyaRuRepository triyaRuRepository;
 
     @Override
     public DashboardBubbleChartResponse getDashboardBubbleChart() {
 
         List<PinskdrevRu> pinskdrevRuList = pinskdrevRuRepository.findAllActual();
-        Map<BigDecimal, List<PinskdrevRu>> map = pinskdrevRuList.stream().collect(Collectors.groupingBy(PinskdrevRu::getDiscount));
-        List<BigDecimal> discountList = map.keySet().stream().sorted().toList();
+        Map<BigDecimal, List<PinskdrevRu>> mapPinskdrev = pinskdrevRuList.stream().collect(Collectors.groupingBy(PinskdrevRu::getDiscount));
+        List<BigDecimal> discountList = mapPinskdrev.keySet().stream().sorted().toList();
         DashboardBubbleChart dashboardBubbleChartPinskdrevRu = new DashboardBubbleChart();
         dashboardBubbleChartPinskdrevRu.setLabel("PinskdrevRu");
         for (BigDecimal discount : discountList) {
-            BigDecimal x = BigDecimal.valueOf(map.get(discount).size());
-            BigDecimal y = map.get(discount).stream().map(PinskdrevRu::getPriceNew)
+            BigDecimal x = BigDecimal.valueOf(mapPinskdrev.get(discount).size());
+            BigDecimal y = mapPinskdrev.get(discount).stream().map(PinskdrevRu::getPriceNew)
                     .reduce(BigDecimal.ZERO, BigDecimal::add)
-                    .divide(BigDecimal.valueOf(map.get(discount).size()), 2, RoundingMode.HALF_UP);
+                    .divide(BigDecimal.valueOf(mapPinskdrev.get(discount).size()), 2, RoundingMode.HALF_UP);
 
             Dataset dataset = Dataset.builder()
                     .x(x)
@@ -42,6 +44,26 @@ public class DashboardBubbleChartServiceImpl implements DashboardBubbleChartServ
                     .build();
             dashboardBubbleChartPinskdrevRu.getData().add(dataset);
         }
+
+        // FIXME трия не верно считает скидку. РАскоментировать после фикса скидки, и добавить в return
+//        List<TriyaRu> triyaRuList = triyaRuRepository.findAllActual();
+//        Map<BigDecimal, List<TriyaRu>> mapTriya = triyaRuList.stream().collect(Collectors.groupingBy(TriyaRu::getDiscount));
+//        List<BigDecimal> discountListTriya = mapTriya.keySet().stream().sorted().toList();
+//        DashboardBubbleChart dashboardBubbleChartTriya = new DashboardBubbleChart();
+//        dashboardBubbleChartTriya.setLabel("TriyaRu");
+//        for (BigDecimal discount : discountListTriya) {
+//            BigDecimal x = BigDecimal.valueOf(mapTriya.get(discount).size());
+//            BigDecimal y = mapTriya.get(discount).stream().map(TriyaRu::getPriceNew)
+//                    .reduce(BigDecimal.ZERO, BigDecimal::add)
+//                    .divide(BigDecimal.valueOf(mapTriya.get(discount).size()), 2, RoundingMode.HALF_UP);
+//
+//            Dataset dataset = Dataset.builder()
+//                    .x(x)
+//                    .y(y)
+//                    .r(discount)
+//                    .build();
+//            dashboardBubbleChartTriya.getData().add(dataset);
+//        }
 
 
         return DashboardBubbleChartResponse.builder()
