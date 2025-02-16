@@ -129,12 +129,12 @@ public class TriyaRuDataServiceImpl implements TriyaRuDataService {
     }
 
     private Integer convertToInteger(String text) {
-//        Pattern pattern = Pattern.compile("\\b[\\d]+\\b");
-//        Matcher matcher = pattern.matcher(text);
-//        String trimmedText = "0";
-//        if (matcher.find()) {
-//            trimmedText = matcher.group();
-//        }
+        Pattern pattern = Pattern.compile("\\b[\\d]+\\b");
+        Matcher matcher = pattern.matcher(text);
+        String trimmedText = "0";
+        if (matcher.find()) {
+            trimmedText = matcher.group();
+        }
         return Integer.parseInt(text.replaceAll(" ", ""));
     }
 
