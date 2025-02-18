@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +30,6 @@ public class DashboardTreeMapControllerV1 {
     private final DashboardBubbleChartService dashboardBubbleChartService;
 
     @Operation(summary = "Get DashboardTreeMap")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/tree-map")
     public ResponseEntity<DashboardTreeMapResponse> getDashboardTreeMap() {
         DashboardTreeMapResponse result = dashboardTreeMapService.getDashboardTreeMapResponse();
@@ -39,7 +37,6 @@ public class DashboardTreeMapControllerV1 {
     }
 
     @Operation(summary = "Get DashboardTreeMap")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/line-chart")
     public ResponseEntity<DashboardLineChartResponse> getDashboardLineChart() {
         DashboardLineChartResponse result = dashboardLineChartService.getDashboardLineChartResponse();
@@ -47,7 +44,6 @@ public class DashboardTreeMapControllerV1 {
     }
 
     @Operation(summary = "Get DashboardPieChart")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/pie-chart")
     public ResponseEntity<DashboardPieChartResponse> getDashboardPieChartResponse() {
         DashboardPieChartResponse result = dashboardPieChartService.getPieChart();
@@ -61,7 +57,6 @@ public class DashboardTreeMapControllerV1 {
     }
 
     @Operation(summary = "Get DashboardBubbleChart")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/bubble-chart")
     public ResponseEntity<DashboardBubbleChartResponse> getDashboardBubbleChartResponse() {
         DashboardBubbleChartResponse result = dashboardBubbleChartService.getDashboardBubbleChart();
