@@ -143,7 +143,7 @@ public class TriyaRuDataServiceImpl implements TriyaRuDataService {
         BigDecimal priceOld = item.get("oldPrice") != null ? BigDecimal.valueOf(item.get("oldPrice").asInt()) : BigDecimal.ZERO;
         BigDecimal priceNew = item.get("price") != null ? BigDecimal.valueOf(item.get("price").asInt()) : BigDecimal.ZERO;
 
-        if (priceOld.compareTo(BigDecimal.ZERO) == 0) {
+        if (priceOld.compareTo(BigDecimal.ZERO) == 0 || priceOld.compareTo(priceNew) < 0) {
             return BigDecimal.ZERO;
         }
         return priceOld.subtract(priceNew).divide(priceOld, 2, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
