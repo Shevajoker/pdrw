@@ -88,14 +88,15 @@ public class DashboardServiceImpl implements DashboardService {
             dashboard.setLeastPopularCategory(new LeastPopularCategory(leastPopularCategoryName, (int) leastPopularCategoryCount));
 
             PinskdrevRu max = pinskdrevRuList.stream()
-                    .max(Comparator.comparing(pinskdrevRu -> getDiscountPercentage(pinskdrevRu.getPriceOld(), pinskdrevRu.getDiscount())))
+                    .max(Comparator.comparing(PinskdrevRu::getDiscount))
                     .orElseThrow();
-            dashboard.setMaxDiscountProduct(new MaxDiscountProduct(getDiscountPercentage(max.getPriceOld(), max.getDiscount()), max.getLink()));
+            dashboard.setMaxDiscountProduct(new MaxDiscountProduct(max.getDiscount(), max.getLink()));
 
             PinskdrevRu min = pinskdrevRuList.stream()
-                    .min(Comparator.comparing(pinskdrevRu -> getDiscountPercentage(pinskdrevRu.getPriceOld(), pinskdrevRu.getDiscount())))
+                    .filter(pinskdrevRu -> pinskdrevRu.getDiscount().compareTo(BigDecimal.ZERO) != 0 )
+                    .min(Comparator.comparing(PinskdrevRu::getDiscount))
                     .orElseThrow();
-            dashboard.setMinDiscountProduct(new MinDiscountProduct(getDiscountPercentage(min.getPriceOld(), min.getDiscount()), min.getLink()));
+            dashboard.setMinDiscountProduct(new MinDiscountProduct(min.getDiscount(), min.getLink()));
 
             long count = pinskdrevRuList.stream().filter(pinskdrevRu -> pinskdrevRu.getDiscount().equals(BigDecimal.ZERO)).count();
 
@@ -184,14 +185,15 @@ public class DashboardServiceImpl implements DashboardService {
             dashboard.setLeastPopularCategory(new LeastPopularCategory(leastPopularCategoryName, (int) leastPopularCategoryCount));
 
             TriyaRu max = triyaRuList.stream()
-                    .max(Comparator.comparing(pinskdrevRu -> getDiscountPercentage(pinskdrevRu.getPriceOld(), pinskdrevRu.getDiscount())))
+                    .max(Comparator.comparing(TriyaRu::getDiscount))
                     .orElseThrow();
-            dashboard.setMaxDiscountProduct(new MaxDiscountProduct(getDiscountPercentage(max.getPriceOld(), max.getDiscount()), max.getLink()));
+            dashboard.setMaxDiscountProduct(new MaxDiscountProduct(max.getDiscount(), max.getLink()));
 
             TriyaRu min = triyaRuList.stream()
-                    .min(Comparator.comparing(pinskdrevRu -> getDiscountPercentage(pinskdrevRu.getPriceOld(), pinskdrevRu.getDiscount())))
+                    .filter(triyaRu -> triyaRu.getDiscount().compareTo(BigDecimal.ZERO) != 0 )
+                    .min(Comparator.comparing(TriyaRu::getDiscount))
                     .orElseThrow();
-            dashboard.setMinDiscountProduct(new MinDiscountProduct(getDiscountPercentage(min.getPriceOld(), min.getDiscount()), min.getLink()));
+            dashboard.setMinDiscountProduct(new MinDiscountProduct(min.getDiscount(), min.getLink()));
 
             long count = triyaRuList.stream().filter(pinskdrevRu -> pinskdrevRu.getDiscount().equals(BigDecimal.ZERO)).count();
 
