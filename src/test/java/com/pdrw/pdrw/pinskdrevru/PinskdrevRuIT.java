@@ -169,7 +169,8 @@ public class PinskdrevRuIT {
     @Test
     void shouldFindActualWithSaleByType() {
         createEntityes(5);
-        PinskdrevRu pinskdrevRu = pinskdrevRuService.findAll().getFirst();
+        List<PinskdrevRu> list = pinskdrevRuService.findAll();
+        PinskdrevRu pinskdrevRu = pinskdrevRuService.findAll().getLast();
         List<PinskdrevRu> result = pinskdrevRuService.findActualWithSaleByType(pinskdrevRu.getType());
         assertFalse(result.isEmpty());
     }

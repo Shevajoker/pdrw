@@ -11,7 +11,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
   liquibase:
-      enabled: true
-      drop-first: false
-      change-log: db/changelog/db.changelog-test.yml
-      default-schema: public
+    enabled: true
+    drop-first: false
+    change-log: db/changelog/db.changelog-test.yml
+    default-schema: public

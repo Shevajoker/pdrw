@@ -20,4 +20,11 @@ databaseChangeLog:
 
 
   - include:
+      file: db\changelog\testchanges\data\pinskdrevru_start_data_test.sql
+
+  - include:
+      file: db\changelog\testchanges\data\triyaru_start_data_test.sql
+  - include:
+      file: db\changelog\testchanges\data\users_start_data_test.sql
+  - include:
       file: db\changelog\testchanges\data\bestmebelru_start_data_test.sql

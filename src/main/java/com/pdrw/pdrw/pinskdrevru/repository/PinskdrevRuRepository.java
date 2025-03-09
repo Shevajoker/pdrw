@@ -122,4 +122,11 @@ public interface PinskdrevRuRepository extends JpaRepository<PinskdrevRu, UUID> 
             select count(*) from PinskdrevRu as p where p.actual = true and p.priceNew >= ?1 and p.priceNew < ?2
             """)
     Integer findDataForDashboardLineChart(BigDecimal priceMin, BigDecimal priceMax);
+
+    @Query("""
+            SELECT new com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+            FROM PinskdrevRu as p
+            WHERE p.actual = true
+            """)
+    List<PinskdrevRu> findAllActual();
 }
