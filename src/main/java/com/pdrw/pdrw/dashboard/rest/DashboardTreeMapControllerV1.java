@@ -32,15 +32,13 @@ public class DashboardTreeMapControllerV1 {
     private final DashboardPieChartService dashboardPieChartService;
 
     @Operation(summary = "Get DashboardTreeMap")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/tree-map")
     public ResponseEntity<DashboardTreeMapResponse> getDashboardTreeMap() {
         DashboardTreeMapResponse result = dashboardTreeMapService.getDashboardTreeMapResponse();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get DashboardTreeMap")
-    @PreAuthorize("hasRole('USER')")
+    @Operation(summary = "Get DashboardLineChart")
     @GetMapping("/line-chart")
     public ResponseEntity<DashboardLineChartResponse> getDashboardLineChart() {
         DashboardLineChartResponse result = dashboardLineChartService.getDashboardLineChartResponse();
@@ -48,7 +46,6 @@ public class DashboardTreeMapControllerV1 {
     }
 
     @Operation(summary = "Get DashboardPieChart")
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/pie-chart")
     public ResponseEntity<DashboardPieChartResponse> getDashboardPieChartResponse() {
         DashboardPieChartResponse result = dashboardPieChartService.getPieChart();

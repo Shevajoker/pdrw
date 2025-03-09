@@ -40,16 +40,6 @@ public class BestmebelRu {
     private Date dateUpdate;
     @Column(name = "type")
     private String type;
-    @Column(name = "length")
-    private Integer length;
-    @Column(name = "width")
-    private Integer width;
-    @Column(name = "height")
-    private Integer height;
-    @Column(name = "weight")
-    private Integer weight;
-    @Column(name = "volume")
-    private Double volume;
     @Column(name = "actual")
     private Boolean actual;
     @Column(name = "link")

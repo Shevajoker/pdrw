@@ -21,7 +21,7 @@ public interface BestmebelRuRepository extends JpaRepository<BestmebelRu, UUID> 
     List<BestmebelRu> findByTypeLike(String article);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.actual, p.link)
              FROM BestmebelRu as p
              WHERE p.actual = true
              AND p.type = ?1
@@ -45,14 +45,14 @@ public interface BestmebelRuRepository extends JpaRepository<BestmebelRu, UUID> 
     @Query("SELECT p.article FROM BestmebelRu p group by p.article")
     List<String> findAllArticles();
 
-    @Query("SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM BestmebelRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew ASC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.actual, p.link) FROM BestmebelRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew ASC LIMIT 1")
     Optional<BestmebelRu> findByTypeAndMinPrice(String type);
 
-    @Query("SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link) FROM BestmebelRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew DESC LIMIT 1")
+    @Query("SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.actual, p.link) FROM BestmebelRu p WHERE p.actual = true AND p.type like :type and p.priceNew != 0 ORDER BY p.priceNew DESC LIMIT 1")
     Optional<BestmebelRu> findByTypeAndMaxPrice(String type);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.actual, p.link)
              FROM BestmebelRu p
              WHERE p.actual = true
              AND p.createDate BETWEEN :fromDate and :toDate
@@ -63,7 +63,7 @@ public interface BestmebelRuRepository extends JpaRepository<BestmebelRu, UUID> 
     List<BestmebelRu> findNewCreatedItems(Date fromDate, Date toDate, Integer limit);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate,p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate,p.type, p.actual, p.link)
              FROM BestmebelRu as p
              WHERE p.actual = true
              AND p.dateUpdate < :date
@@ -73,7 +73,7 @@ public interface BestmebelRuRepository extends JpaRepository<BestmebelRu, UUID> 
     List<BestmebelRu> findNotUpdatedItems(Date date, Integer limit);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate,p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate,p.type, p.actual, p.link)
              FROM BestmebelRu as p
              WHERE p.actual = true
              AND p.createDate BETWEEN :fromDate and :toDate
@@ -84,7 +84,7 @@ public interface BestmebelRuRepository extends JpaRepository<BestmebelRu, UUID> 
     List<BestmebelRu> getChangedItems(Date fromDate, Date toDate, Integer limit);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate,p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate,p.type, p.actual, p.link)
              FROM BestmebelRu as p
              WHERE p.article = :article
              ORDER BY p.dateUpdate DESC
@@ -93,7 +93,7 @@ public interface BestmebelRuRepository extends JpaRepository<BestmebelRu, UUID> 
     List<BestmebelRu> getItemWithPrevious(String article);
 
     @Query("""
-             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.length, p.width, p.height, p.weight, p.volume, p.actual, p.link)
+             SELECT new com.pdrw.pdrw.bestmebelru.model.BestmebelRu(p.id, p.article, p.name, p.image, p.priceNew, p.priceOld, p.discount, p.createDate, p.dateUpdate, p.type, p.actual, p.link)
              FROM BestmebelRu as p
              WHERE p.actual = true
              AND p.priceOld > 0

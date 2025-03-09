@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,12 +27,11 @@ public class BestmebelRuDataRestControllerV1 {
     private final DashboardService dashboardService;
 
     @Operation(summary = "Download data")
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/set-data")
     public int setData(@RequestBody String data) {
         int i = bestmebelRuDataService.setData(data);
         List<BestmebelRu> all = bestmebelRuService.findAll();
-//        dashboardService.createDashboardBestmebelRu(all);
+        dashboardService.createDashboardBestmebelRu(all);
         return i;
     }
 

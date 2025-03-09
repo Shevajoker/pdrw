@@ -13,11 +13,6 @@ CREATE TABLE IF NOT EXISTS bestmebel_ru
     date_create TIMESTAMP WITHOUT TIME ZONE,
     date_update TIMESTAMP WITHOUT TIME ZONE,
     type        VARCHAR(255),
-    length      INTEGER,
-    width       INTEGER,
-    height      INTEGER,
-    weight      INTEGER,
-    volume      DOUBLE PRECISION,
     actual      BOOLEAN DEFAULT false,
     link        VARCHAR(255),
     CONSTRAINT pk_bestmebel_ru PRIMARY KEY (id)
