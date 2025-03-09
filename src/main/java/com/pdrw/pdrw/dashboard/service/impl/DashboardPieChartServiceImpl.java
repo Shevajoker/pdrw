@@ -1,5 +1,6 @@
 package com.pdrw.pdrw.dashboard.service.impl;
 
+import com.pdrw.pdrw.bestmebelru.repository.BestmebelRuRepository;
 import com.pdrw.pdrw.dashboard.entity.piechart.DashboardPieChart;
 import com.pdrw.pdrw.dashboard.entity.piechart.Extra;
 import com.pdrw.pdrw.dashboard.entity.piechart.dto.DashboardPieChartResponse;
@@ -17,6 +18,7 @@ public class DashboardPieChartServiceImpl implements DashboardPieChartService {
 
     private final PinskdrevRuRepository pinskdrevRuRepository;
     private final TriyaRuRepository triyaRuRepository;
+    private final BestmebelRuRepository bestmebelRuRepository;
 
     @Override
     public DashboardPieChartResponse getPieChart() {
@@ -32,8 +34,14 @@ public class DashboardPieChartServiceImpl implements DashboardPieChartService {
         pieChartTriyaRu.setValue(triyaRuRepository.countByActualTrue());
         pieChartTriyaRu.setExtra(new Extra("triya.ru"));
 
+        DashboardPieChart pieChartBestmebelRu = new DashboardPieChart();
+        pieChartTriyaRu.setName("bestmebel.ru");
+        pieChartTriyaRu.setValue(bestmebelRuRepository.countBestmebelRuByActualTrue());
+        pieChartTriyaRu.setExtra(new Extra("bestmebel.ru"));
+
         response.getDashboardPieChartList().add(pieChartPinskdrevRu);
         response.getDashboardPieChartList().add(pieChartTriyaRu);
+        response.getDashboardPieChartList().add(pieChartBestmebelRu);
 
         return response;
     }

@@ -1,11 +1,13 @@
 package com.pdrw.pdrw.dashboard.service.impl;
 
+import com.pdrw.pdrw.bestmebelru.repository.BestmebelRuRepository;
 import com.pdrw.pdrw.dashboard.entity.linechart.DashboardLineChart;
 import com.pdrw.pdrw.dashboard.entity.linechart.Dataset;
 import com.pdrw.pdrw.dashboard.entity.linechart.dto.DashboardLineChartResponse;
 import com.pdrw.pdrw.dashboard.service.DashboardLineChartService;
 import com.pdrw.pdrw.pinskdrevru.repository.PinskdrevRuRepository;
 import com.pdrw.pdrw.triya.repository.TriyaRuRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class DashboardLineChartServiceImpl implements DashboardLineChartService 
 
     private final PinskdrevRuRepository pinskdrevRuRepository;
     private final TriyaRuRepository triyaRuRepository;
+    private final BestmebelRuRepository bestmebelRuRepository;
 
     @Override
     public DashboardLineChartResponse getDashboardLineChartResponse() {
@@ -67,6 +70,22 @@ public class DashboardLineChartServiceImpl implements DashboardLineChartService 
         lineChart.getDatasets().add(Dataset.builder()
                 .label("triya.ru")
                 .data(triyaData)
+                .build());
+
+        List<Integer> bestmebelRuData = new ArrayList<>();
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.ZERO, BigDecimal.valueOf(20_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(20_000), BigDecimal.valueOf(40_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(40_000), BigDecimal.valueOf(60_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(60_000), BigDecimal.valueOf(80_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(80_000), BigDecimal.valueOf(100_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(100_000), BigDecimal.valueOf(120_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(120_000), BigDecimal.valueOf(140_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(140_000), BigDecimal.valueOf(160_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(180_000), BigDecimal.valueOf(180_000)));
+        bestmebelRuData.add(bestmebelRuRepository.findDataForDashboardLineChart(BigDecimal.valueOf(200_000), BigDecimal.valueOf(200_000_000)));
+        lineChart.getDatasets().add(Dataset.builder()
+                .label("bestmebel.ru")
+                .data(bestmebelRuData)
                 .build());
 
         return DashboardLineChartResponse.builder()

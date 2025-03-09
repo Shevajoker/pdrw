@@ -1,5 +1,6 @@
 package com.pdrw.pdrw.dashboard.service.impl;
 
+import com.pdrw.pdrw.bestmebelru.repository.BestmebelRuRepository;
 import com.pdrw.pdrw.dashboard.entity.treemap.DashboardTreeMap;
 import com.pdrw.pdrw.dashboard.entity.treemap.Extra;
 import com.pdrw.pdrw.dashboard.entity.treemap.dto.DashboardTreeMapResponse;
@@ -15,6 +16,7 @@ public class DashboardTreeMapServiceImpl implements DashboardTreeMapService {
 
     private final PinskdrevRuRepository pinskdrevRuRepository;
     private final TriyaRuRepository triyaRuRepository;
+    private final BestmebelRuRepository bestmebelRuRepository;
 
     @Override
     public DashboardTreeMapResponse getDashboardTreeMapResponse() {
@@ -31,6 +33,12 @@ public class DashboardTreeMapServiceImpl implements DashboardTreeMapService {
         triyaRu.setExtra(new Extra().setLabel("triya.ru"));
         triyaRu.setSize(triyaRuRepository.summPriceNewActualTrue());
         response.getDashboardTreeMaps().add(triyaRu);
+
+        DashboardTreeMap bestmebelRu = new DashboardTreeMap();
+        bestmebelRu.setName("bestmebel.ru");
+        bestmebelRu.setExtra(new Extra().setLabel("bestmebel.ru"));
+        bestmebelRu.setSize(bestmebelRuRepository.summPriceNewActualTrue());
+        response.getDashboardTreeMaps().add(bestmebelRu);
 
         return response;
     }

@@ -1,5 +1,6 @@
 package com.pdrw.pdrw.dashboard.service;
 
+import com.pdrw.pdrw.bestmebelru.model.BestmebelRu;
 import com.pdrw.pdrw.dashboard.entity.Dashboard;
 import com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu;
 import com.pdrw.pdrw.triya.model.TriyaRu;
@@ -13,4 +14,6 @@ public interface DashboardService {
     void createDashboardPinskdrevRu(List<PinskdrevRu> pinskdrevRuList);
 
     void createDashboardTriya(List<TriyaRu> triyaRuList);
+
+    void createDashboardBestmebelRu(List<BestmebelRu> bestmebelRuList);
 }
