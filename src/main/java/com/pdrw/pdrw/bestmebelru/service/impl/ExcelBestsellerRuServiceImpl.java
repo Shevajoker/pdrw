@@ -78,30 +78,10 @@ public class ExcelBestsellerRuServiceImpl implements ExcelBestmebelRuService {
         headerCell.setCellStyle(headerStyle);
 
         headerCell = header.createCell(9);
-        headerCell.setCellValue("Length");
-        headerCell.setCellStyle(headerStyle);
-
-        headerCell = header.createCell(10);
-        headerCell.setCellValue("Width");
-        headerCell.setCellStyle(headerStyle);
-
-        headerCell = header.createCell(11);
-        headerCell.setCellValue("Height");
-        headerCell.setCellStyle(headerStyle);
-
-        headerCell = header.createCell(12);
-        headerCell.setCellValue("Weight");
-        headerCell.setCellStyle(headerStyle);
-
-        headerCell = header.createCell(13);
-        headerCell.setCellValue("Volume");
-        headerCell.setCellStyle(headerStyle);
-
-        headerCell = header.createCell(14);
         headerCell.setCellValue("Actual");
         headerCell.setCellStyle(headerStyle);
 
-        headerCell = header.createCell(15);
+        headerCell = header.createCell(10);
         headerCell.setCellValue("Link");
         headerCell.setCellStyle(headerStyle);
 
@@ -149,9 +129,9 @@ public class ExcelBestsellerRuServiceImpl implements ExcelBestmebelRuService {
             cell.setCellValue(bestmebelRuList.get(i).getDateUpdate());
             cell.setCellStyle(cellStyleDate);
 
-//            cell = rowCon.createCell(8);
-//            cell.setCellValue(bestmebelRuList.get(i).getType());
-//            cell.setCellStyle(cellStyle);
+            cell = rowCon.createCell(8);
+            cell.setCellValue(bestmebelRuList.get(i).getType());
+            cell.setCellStyle(cellStyle);
 //
 //            cell = rowCon.createCell(9);
 //            cell.setCellValue(bestmebelRuList.get(i).getLength());
@@ -173,11 +153,11 @@ public class ExcelBestsellerRuServiceImpl implements ExcelBestmebelRuService {
 //            cell.setCellValue(bestmebelRuList.get(i).getVolume());
 //            cell.setCellStyle(cellStyle);
 
-            cell = rowCon.createCell(14);
+            cell = rowCon.createCell(9);
             cell.setCellValue(bestmebelRuList.get(i).getActual());
             cell.setCellStyle(cellStyle);
 
-            cell = rowCon.createCell(15);
+            cell = rowCon.createCell(10);
             cell.setCellValue(bestmebelRuList.get(i).getLink());
             cell.setCellStyle(cellStyle);
         }
