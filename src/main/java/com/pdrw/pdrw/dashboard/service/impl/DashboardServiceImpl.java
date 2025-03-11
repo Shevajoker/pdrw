@@ -1,5 +1,6 @@
 package com.pdrw.pdrw.dashboard.service.impl;
 
+import com.pdrw.pdrw.bestmebelru.model.BestmebelRu;
 import com.pdrw.pdrw.dashboard.entity.*;
 import com.pdrw.pdrw.dashboard.repository.DashboardRepository;
 import com.pdrw.pdrw.dashboard.service.DashboardService;
@@ -208,6 +209,103 @@ public class DashboardServiceImpl implements DashboardService {
                     .max(Comparator.naturalOrder()).orElse(null);
             Date lastUpdateDate = triyaRuList.stream()
                     .map(TriyaRu::getDateUpdate)
+                    .filter(Objects::nonNull)
+                    .max(Comparator.naturalOrder()).orElse(null);
+
+            dashboard.setLastDateCreate(lastCreateDate);
+            dashboard.setLastDateUpdate(lastUpdateDate);
+
+            dashboardRepository.save(dashboard);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void createDashboardBestmebelRu(List<BestmebelRu> bestmebelRuList) {
+        if (!bestmebelRuList.isEmpty()) {
+            Dashboard dashboard = new Dashboard();
+
+            dashboardRepository.findByStoreName("BestmebelRu")
+                    .ifPresent(dashboardExist -> dashboard.setId(dashboardExist.getId()));
+
+            dashboard.setStoreName("BestmebelRu");
+            dashboard.setTotalProducts(bestmebelRuList.size());
+
+            BigDecimal totalPriceWithOutDiscount = bestmebelRuList.stream()
+                    .map(BestmebelRu::getPriceOld)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            dashboard.setTotalPriceWithoutDiscounts(totalPriceWithOutDiscount);
+
+            BigDecimal totalPriceWithDiscount = bestmebelRuList.stream()
+                    .map(BestmebelRu::getPriceNew)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            dashboard.setTotalPriceWithDiscounts(totalPriceWithDiscount);
+
+            BigDecimal averageDiscount = totalPriceWithDiscount.divide(totalPriceWithOutDiscount, 2, BigDecimal.ROUND_HALF_UP)
+                    .multiply(new BigDecimal("100"));
+            dashboard.setAverageDiscountPercentage(averageDiscount);
+
+            BigDecimal priceMode = bestmebelRuList.stream().map(BestmebelRu::getPriceNew)
+                    .collect(Collectors.groupingBy(number -> number, Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .max(Comparator.comparingLong(Map.Entry::getValue))
+                    .map(Map.Entry::getKey)
+                    .orElse(BigDecimal.ZERO);
+            dashboard.setPriceMode(priceMode);
+
+            BigDecimal averagePrice = bestmebelRuList.stream()
+                    .map(BestmebelRu::getPriceNew)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add)
+                    .divide(BigDecimal.valueOf(bestmebelRuList.size()), 2, BigDecimal.ROUND_HALF_UP);
+            dashboard.setAveragePrice(averagePrice);
+
+            String mostPopularCategoryName = bestmebelRuList.stream().map(BestmebelRu::getType)
+                    .collect(Collectors.groupingBy(type -> type, Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .max(Comparator.comparingLong(Map.Entry::getValue))
+                    .map(Map.Entry::getKey)
+                    .orElse(null);
+
+            long mostPopularCategoryCount = bestmebelRuList.stream().filter(bestmebelRu -> bestmebelRu.getType().equals(mostPopularCategoryName)).count();
+            dashboard.setMostPopularCategory(new MostPopularCategory(mostPopularCategoryName, (int) mostPopularCategoryCount));
+
+            String leastPopularCategoryName = bestmebelRuList.stream().map(BestmebelRu::getType)
+                    .collect(Collectors.groupingBy(type -> type, Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .min(Comparator.comparingLong(Map.Entry::getValue))
+                    .map(Map.Entry::getKey)
+                    .orElse(null);
+
+            long leastPopularCategoryCount = bestmebelRuList.stream().filter(bestmebelRu -> bestmebelRu.getType().equals(leastPopularCategoryName)).count();
+            dashboard.setLeastPopularCategory(new LeastPopularCategory(leastPopularCategoryName, (int) leastPopularCategoryCount));
+
+            BestmebelRu max = bestmebelRuList.stream()
+                    .max(Comparator.comparing(BestmebelRu::getDiscount))
+                    .orElseThrow();
+            dashboard.setMaxDiscountProduct(new MaxDiscountProduct(max.getDiscount(), max.getLink()));
+
+            BestmebelRu min = bestmebelRuList.stream()
+                    .filter(bestmebelRu -> bestmebelRu.getDiscount().compareTo(BigDecimal.ZERO) != 0)
+                    .min(Comparator.comparing(BestmebelRu::getDiscount))
+                    .orElseThrow();
+            dashboard.setMinDiscountProduct(new MinDiscountProduct(min.getDiscount(), min.getLink()));
+
+            long count = bestmebelRuList.stream().filter(bestmebelRu -> bestmebelRu.getDiscount().equals(BigDecimal.ZERO)).count();
+
+            BigDecimal discountedProductsPercentage = BigDecimal.valueOf(count).divide(BigDecimal.valueOf(bestmebelRuList.size()), 2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
+            dashboard.setDiscountedProductsPercentage(discountedProductsPercentage);
+            dashboard.setTotalDeletedProducts(0);
+            dashboard.setTotalUpdatedProducts(0);
+
+            Date lastCreateDate = bestmebelRuList.stream()
+                    .map(BestmebelRu::getCreateDate)
+                    .filter(Objects::nonNull)
+                    .max(Comparator.naturalOrder()).orElse(null);
+            Date lastUpdateDate = bestmebelRuList.stream()
+                    .map(BestmebelRu::getDateUpdate)
                     .filter(Objects::nonNull)
                     .max(Comparator.naturalOrder()).orElse(null);
 
