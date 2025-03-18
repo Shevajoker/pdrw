@@ -31,7 +31,7 @@ public class PinskdrevRuDataRestControllerV1 {
     public int setData(@RequestBody String data) {
         int i = pinskdrevRuDataService.setData(data);
         List<PinskdrevRu> all = pinskdrevRuService.findAll();
-        dashboardService.createDashboardPinskdrevRu(all);
+//        dashboardService.createDashboardPinskdrevRu(all);
         return i;
     }
 

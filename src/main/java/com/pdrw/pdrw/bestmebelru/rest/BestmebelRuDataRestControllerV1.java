@@ -31,7 +31,7 @@ public class BestmebelRuDataRestControllerV1 {
     public int setData(@RequestBody String data) {
         int i = bestmebelRuDataService.setData(data);
         List<BestmebelRu> all = bestmebelRuService.findAll();
-        dashboardService.createDashboardBestmebelRu(all);
+//        dashboardService.createDashboardBestmebelRu(all);
         return i;
     }
 
