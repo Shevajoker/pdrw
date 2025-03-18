@@ -15,11 +15,16 @@ databaseChangeLog:
       file: db\changelog\v1\tables\dashboard\create-table-dashboard.sql
   - include:
       file: db\changelog\v1\tables\subscription\create-table-subscription.sql
+  - include:
+      file: db\changelog\v1\tables\bestmebel\create-bestmebel-v1.sql
 
 
   - include:
       file: db\changelog\testchanges\data\pinskdrevru_start_data_test.sql
+
   - include:
       file: db\changelog\testchanges\data\triyaru_start_data_test.sql
   - include:
       file: db\changelog\testchanges\data\users_start_data_test.sql
+  - include:
+      file: db\changelog\testchanges\data\bestmebelru_start_data_test.sql

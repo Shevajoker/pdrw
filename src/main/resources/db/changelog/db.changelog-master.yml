@@ -15,8 +15,12 @@ databaseChangeLog:
       file: db\changelog\v1\tables\dashboard\create-table-dashboard.sql
   - include:
       file: db\changelog\v1\tables\subscription\create-table-subscription.sql
+  - include:
+      file: db\changelog\v1\tables\bestmebel\create-bestmebel-v1.sql
 
 
+  - include:
+      file: db\changelog\v1\data\bestmebelru_start_data.sql
   - include:
       file: db\changelog\v1\data\pinskdrevru_start_data.sql
   - include:
