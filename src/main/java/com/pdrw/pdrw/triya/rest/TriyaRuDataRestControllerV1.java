@@ -31,7 +31,7 @@ public class TriyaRuDataRestControllerV1 {
     public int setData(@RequestBody String data) {
         int i = dataService.setData(data);
         List<TriyaRu> all = triyaRuService.findAll();
-        dashboardService.createDashboardTriya(all);
+//        dashboardService.createDashboardTriya(all);
         return i;
     }
 
