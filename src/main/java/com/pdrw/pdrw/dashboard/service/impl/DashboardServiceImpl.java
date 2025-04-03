@@ -1,33 +1,44 @@
 package com.pdrw.pdrw.dashboard.service.impl;
 
 import com.pdrw.pdrw.bestmebelru.model.BestmebelRu;
+import com.pdrw.pdrw.bestmebelru.repository.BestmebelRuRepository;
 import com.pdrw.pdrw.dashboard.entity.*;
 import com.pdrw.pdrw.dashboard.repository.DashboardRepository;
 import com.pdrw.pdrw.dashboard.service.DashboardService;
 import com.pdrw.pdrw.pinskdrevru.model.PinskdrevRu;
+import com.pdrw.pdrw.pinskdrevru.repository.PinskdrevRuRepository;
 import com.pdrw.pdrw.triya.model.TriyaRu;
+import com.pdrw.pdrw.triya.repository.TriyaRuRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DashboardServiceImpl implements DashboardService {
 
     private final DashboardRepository dashboardRepository;
+    private final PinskdrevRuRepository pinskdrevRuRepository;
+    private final TriyaRuRepository triyaRuRepository;
+    private final BestmebelRuRepository bestmebelRuRepository;
 
     @Override
     public List<Dashboard> findAll() {
         return dashboardRepository.findAll();
     }
 
+    @Scheduled(fixedRate = 3, timeUnit = TimeUnit.HOURS)
     @Transactional
-    public void createDashboardPinskdrevRu(List<PinskdrevRu> pinskdrevRuList) {
-
+    public void createDashboardPinskdrevRu() {
+        List<PinskdrevRu> pinskdrevRuList = pinskdrevRuRepository.findAll();
         if (!pinskdrevRuList.isEmpty()) {
             Dashboard dashboard = new Dashboard();
 
@@ -119,12 +130,14 @@ public class DashboardServiceImpl implements DashboardService {
             dashboard.setLastDateUpdate(lastUpdateDate);
 
             dashboardRepository.save(dashboard);
+            log.info("Update dashboard PinskdrevRu");
         }
     }
 
+    @Scheduled(fixedRate = 3, timeUnit = TimeUnit.HOURS)
     @Transactional
-    public void createDashboardTriya(List<TriyaRu> triyaRuList) {
-
+    public void createDashboardTriya() {
+        List<TriyaRu> triyaRuList = triyaRuRepository.findAll();
         if (!triyaRuList.isEmpty()) {
             Dashboard dashboard = new Dashboard();
 
@@ -216,12 +229,15 @@ public class DashboardServiceImpl implements DashboardService {
             dashboard.setLastDateUpdate(lastUpdateDate);
 
             dashboardRepository.save(dashboard);
+            log.info("Update dashboard Triya");
         }
     }
 
     @Override
+    @Scheduled(fixedRate = 3, timeUnit = TimeUnit.MINUTES)
     @Transactional
-    public void createDashboardBestmebelRu(List<BestmebelRu> bestmebelRuList) {
+    public void createDashboardBestmebelRu() {
+        List<BestmebelRu> bestmebelRuList = bestmebelRuRepository.findAll();
         if (!bestmebelRuList.isEmpty()) {
             Dashboard dashboard = new Dashboard();
 
@@ -313,6 +329,7 @@ public class DashboardServiceImpl implements DashboardService {
             dashboard.setLastDateUpdate(lastUpdateDate);
 
             dashboardRepository.save(dashboard);
+            log.info("Update dashboard BestmebelRu");
         }
     }
 
