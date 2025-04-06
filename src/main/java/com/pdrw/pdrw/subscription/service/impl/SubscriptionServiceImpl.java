@@ -1,9 +1,11 @@
 package com.pdrw.pdrw.subscription.service.impl;
 
+import com.pdrw.pdrw.pinskdrevru.client.AlertRequest;
 import com.pdrw.pdrw.security.entity.User;
 import com.pdrw.pdrw.security.service.UserService;
 import com.pdrw.pdrw.subscription.dto.SubscriptionDataDto;
 import com.pdrw.pdrw.subscription.dto.SubscriptionDto;
+import com.pdrw.pdrw.subscription.dto.SubscriptionDataForNotifyingDto;
 import com.pdrw.pdrw.subscription.dto.SubscriptionResponse;
 import com.pdrw.pdrw.subscription.entity.Subscription;
 import com.pdrw.pdrw.subscription.exception.SubscriptionException;
@@ -11,12 +13,16 @@ import com.pdrw.pdrw.subscription.exception.SubscriptionNotFoundException;
 import com.pdrw.pdrw.subscription.repository.SubscriptionRepository;
 import com.pdrw.pdrw.subscription.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -25,17 +31,22 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Transactional(readOnly = true)
 public class SubscriptionServiceImpl implements SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
     private final UserService userService;
     private final JavaMailSender javaMailSender;
+    private final AlertRequest alertRequest;
+    private final RestTemplate restTemplate;
 
     @Value("${link.active.host}")
     private String host;
     @Value("${spring.mail.username}")
     private String username;
+    @Value("${application.config.alert-url}")
+    private String alertUrl;
 
 
     @Override
@@ -131,5 +142,23 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         message.setFrom(username);
 
         javaMailSender.send(message);
+    }
+
+    @Override
+    public HttpStatusCode notifyToChatBot(SubscriptionDataForNotifyingDto data) {
+        alertRequest.setMessage(data.toString());
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<AlertRequest> entity = new HttpEntity<>(alertRequest, headers);
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity(alertUrl, entity, String.class);
+            HttpStatusCode statusCode = responseEntity.getStatusCode();
+            log.atInfo().log("Response status code for ChatBot service: {}", statusCode);
+            return statusCode;
+        } catch (RestClientException e) {
+            HttpStatusCode statusCode = HttpStatus.BAD_GATEWAY;
+            log.atInfo().log("Response status code for ChatBot service: {}", statusCode);
+            return statusCode;
+        }
     }
 }
